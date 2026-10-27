@@ -6,7 +6,7 @@ st.set_page_config(
     page_title="Nebulous Vision", page_icon="🌙", layout="wide"
 )
 
-# كود ذكي لاكتشاف صورة الشعار أياً كان اسمها المرفوع على جيت هب
+# اكتشاف صورة الشعار تلقائياً أياً كان اسمها
 logo_file = "logo.png"
 for f in [
     "logo.png",
@@ -18,7 +18,7 @@ for f in [
     logo_file = f
     break
 
-# تصميم الواجهة المطور بدقة مطابقة لطلباتك الفنية
+# تصميم الواجهة المطور بدون مربعات وبألوان وتنسيق عالي الدقة
 st.markdown(
     f"""
     <style>
@@ -107,7 +107,7 @@ st.markdown(
         font-weight: 500;
     }}
 
-    /* تنسيق عام للأزرار لضمان ظهور الكلام بوضوح تام */
+    /* تنسيق الأزرار مع ضمان ظهور النص الداكن بوضوح تام دون الحاجة للمرور بالماوس */
     .stButton > button {{
         font-size: 20px !important;
         font-weight: bold !important;
@@ -116,66 +116,64 @@ st.markdown(
         max-width: 100% !important;
         height: 65px !important;
         transition: all 0.3s ease !important;
-        margin: 10px auto !important;
+        margin: 15px auto !important;
     }}
 
-    /* زر أبدأ العادي (رمادي لامع فخم مع نص أبيض واضح) */
+    /* زر أبدأ العادي (رمادي لامع مع نص داكن واضح جداً) */
     .btn-normal > button {{
-        background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #334155 100%) !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
-        box-shadow: 0px 6px 25px rgba(148, 163, 184, 0.45) !important;
+        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #64748b 100%) !important;
+        color: #0f172a !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        box-shadow: 0px 6px 25px rgba(148, 163, 184, 0.4) !important;
     }}
     .btn-normal > button:hover {{
         transform: scale(1.02);
-        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #475569 100%) !important;
+        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%) !important;
+        color: #000000 !important;
     }}
 
-    /* زر قسم المكفوفين (ألوان القمر الفضية اللامعة مع نص داكن واضح جداً) */
+    /* زر قسم المكفوفين (أبيض فضي لامع بألوان القمر مع نص داكن واضح) */
     .btn-blind > button {{
-        background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #64748b 100%) !important;
-        color: #0f172a !important;
-        border: 1px solid rgba(255, 255, 255, 0.7) !important;
-        box-shadow: 0px 6px 25px rgba(241, 245, 249, 0.35) !important;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%) !important;
+        color: #020617 !important;
+        border: 1px solid rgba(255, 255, 255, 0.8) !important;
+        box-shadow: 0px 6px 25px rgba(248, 250, 252, 0.35) !important;
     }}
     .btn-blind > button:hover {{
         transform: scale(1.02);
-        background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%) !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%) !important;
+        color: #0f172a !important;
     }}
 
-    /* بطاقة الشرح والتفاصيل الاحترافية */
-    .info-card {{
-        background: rgba(15, 23, 42, 0.78);
-        border: 1px solid rgba(0, 210, 255, 0.25);
-        border-radius: 20px;
-        padding: 30px;
+    /* تصميم النصوص والشرح مباشرة على الخلفية بدون صناديق أو إطارات بدائية */
+    .clean-section {{
         max-width: 750px;
-        margin: 20px auto;
+        margin: 30px auto;
         text-align: right;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
         position: relative;
         z-index: 2;
-    }}
-    .info-card h3 {{
-        color: #00d2ff;
-        font-size: 24px;
-        margin-bottom: 15px;
-        font-weight: 800;
+        padding: 0 20px;
+    }
+    .clean-section h3 {{
+        color: #94a3b8;
+        font-size: 22px;
+        margin-bottom: 12px;
+        font-weight: 700;
         text-align: center;
+        letter-spacing: 0.5px;
     }}
-    .info-card p {{
-        color: #e2e8f0;
+    .clean-section p {{
+        color: #94a3b8;
         font-size: 16px;
         line-height: 1.8;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }}
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# هيدر الواجهة: شعار الفريق (صورة)، مختار اللغات مع 🌐، وشعار ناسا
+# هيدر الواجهة: شعار الفريق، مختار اللغات مع 🌐، وشعار ناسا
 header_col1, header_col2, header_col3 = st.columns([2, 2, 2])
 
 with header_col1:
@@ -331,7 +329,7 @@ else:
       "Provides full voice and audio assistance for visually impaired users."
   )
 
-# 1. القمر العملاق وفوهات + العنوان الرئيسي والوصف
+# 1. القمر العملاق والفوهات + العنوان الرئيسي والوصف
 st.markdown(
     f"""
     <div class="hero-wrapper">
@@ -345,17 +343,17 @@ st.markdown(
 
 col1, col2, col3 = st.columns([1, 2, 1])
 
-# 2. زرار "أبدأ الاستكشاف" العادي (رمادي لامع)
+# 2. زرار "أبدأ الاستكشاف" العادي (رمادي لامع بنص واضح)
 with col2:
   st.markdown('<div class="btn-normal">', unsafe_allow_html=True)
   if st.button(btn_normal, key="normal_btn"):
     st.success("تم تفعيل وضع الاستكشاف بنجاح!")
   st.markdown("</div>", unsafe_allow_html=True)
 
-# 3. شرح التطبيق ("ما هو تطبيق نيبلوز فيشون؟")
+# 3. شرح التطبيق (نص رمادي نقي بدون إطارات أو صناديق)
 st.markdown(
     f"""
-    <div class="info-card">
+    <div class="clean-section">
         <h3>{card_title}</h3>
         <p>{card_text1}</p>
         <p>{card_text2}</p>
@@ -365,23 +363,23 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 4. شرح قسم المكفوفين
+# 4. شرح قسم المكفوفين (نص رمادي نقي بدون صناديق)
 st.markdown(
     f"""
-    <div class="info-card">
-        <h3 style="color: #38bdf8;">{blind_title}</h3>
+    <div class="clean-section">
+        <h3>{blind_title}</h3>
         <p>{blind_desc}</p>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-# 5. زرار قسم المكفوفين (ألوان القمر اللامعة: رمادي أبيض فخم) تحت الشرح
+# 5. زرار قسم المكفوفين (أبيض فضي لامع بنص داكن واضح) تحت الشرح
 with col2:
   st.markdown('<div class="btn-blind">', unsafe_allow_html=True)
   if st.button(btn_blind, key="blind_btn"):
     st.info("جاري تفعيل واجهة الاستكشاف الصوتي وقراءة البيانات للمكفوفين...")
   st.markdown("</div>", unsafe_allow_html=True)
 
-# مسافة ختامية مريحة للعين
+# مسافة ختامية مريحة
 st.write("<br><br>", unsafe_allow_html=True)
