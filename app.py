@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 
 # إعداد الصفحة وتوسيعها
@@ -5,18 +6,30 @@ st.set_page_config(
     page_title="Nebulous Vision", page_icon="🌙", layout="wide"
 )
 
+# كود ذكي لاكتشاف صورة الشعار أياً كان اسمها المرفوع على جيت هب
+logo_file = "logo.png"
+for f in [
+    "logo.png",
+    "logo.jpg",
+    "logo.jpeg",
+    "WhatsApp Image 2026-10-27 at 7.26.05 PM.jpeg",
+]:
+  if os.path.exists(f):
+    logo_file = f
+    break
+
 # تصميم الواجهة المطور بدقة مطابقة لطلباتك الفنية
 st.markdown(
-    """
+    f"""
     <style>
-    .stApp {
+    .stApp {{
         background-color: #020408;
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
+    }}
     
     /* الهيدر العلوي: شعار الفريق، مختار اللغات مع 🌐، وشعار ناسا */
-    .top-header {
+    .top-header {{
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -24,25 +37,25 @@ st.markdown(
         padding: 20px 40px;
         position: relative;
         z-index: 20;
-    }
+    }}
     
-    .team-logo-img {
+    .team-logo-img {{
         width: 65px;
         height: 65px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid #00d2ff;
         box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
-    }
+    }}
     
-    .nasa-logo {
+    .nasa-logo {{
         width: 100px;
         height: auto;
         filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
-    }
+    }}
 
     /* حاوية المنتصف للقمر والعنوان */
-    .hero-wrapper {
+    .hero-wrapper {{
         position: relative;
         width: 100%;
         display: flex;
@@ -52,10 +65,10 @@ st.markdown(
         text-align: center;
         padding-top: 20px;
         padding-bottom: 10px;
-    }
+    }}
 
     /* قمر عملاق جداً في الخلفية بتفاصيل وفوهات حقيقية وتدريج فخم */
-    .moon-huge {
+    .moon-huge {{
         position: absolute;
         width: 700px;
         height: 700px;
@@ -68,10 +81,10 @@ st.markdown(
         box-shadow: inset -100px -100px 140px rgba(0, 0, 0, 0.95), 0 0 100px rgba(0, 210, 255, 0.4);
         -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
         mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
-    }
+    }}
 
     /* اسم التطبيق ضخم ولامع بتدريج الأزرق والرمادي */
-    .main-title {
+    .main-title {{
         font-size: 76px;
         font-weight: 900;
         background: linear-gradient(135deg, #00d2ff 25%, #e2e8f0 85%);
@@ -82,9 +95,9 @@ st.markdown(
         position: relative;
         z-index: 2;
         letter-spacing: 1px;
-    }
+    }}
 
-    .sub-title {
+    .sub-title {{
         font-size: 21px;
         color: #cbd5e1;
         margin-bottom: 20px;
@@ -92,52 +105,46 @@ st.markdown(
         z-index: 2;
         line-height: 1.5;
         font-weight: 500;
-    }
+    }}
 
-    /* زر أبدأ العادي (رمادي لامع فخم) */
-    .btn-normal > button {
-        background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #334155 100%) !important;
-        color: #ffffff !important;
-        font-size: 21px !important;
-        font-weight: bold !important;
-        border-radius: 18px !important;
-        width: 420px !important;
-        max-width: 100% !important;
-        height: 65px !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
-        box-shadow: 0px 6px 25px rgba(148, 163, 184, 0.45) !important;
-        transition: all 0.3s ease !important;
-        margin: 10px auto !important;
-    }
-    .btn-normal > button:hover {
-        transform: scale(1.02);
-        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #475569 100%) !important;
-        box-shadow: 0px 8px 30px rgba(255, 255, 255, 0.4) !important;
-    }
-
-    /* زر قسم المكفوفين (رمادي أبيض ألوان القمر اللامعة مع نص داكن واضح للرؤية) */
-    .btn-blind > button {
-        background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #64748b 100%) !important;
-        color: #0f172a !important;
+    /* تنسيق عام للأزرار لضمان ظهور الكلام بوضوح تام */
+    .stButton > button {{
         font-size: 20px !important;
         font-weight: bold !important;
         border-radius: 18px !important;
         width: 420px !important;
         max-width: 100% !important;
         height: 65px !important;
-        border: 1px solid rgba(255, 255, 255, 0.7) !important;
-        box-shadow: 0px 6px 25px rgba(241, 245, 249, 0.35) !important;
         transition: all 0.3s ease !important;
         margin: 10px auto !important;
-    }
-    .btn-blind > button:hover {
+    }}
+
+    /* زر أبدأ العادي (رمادي لامع فخم مع نص أبيض واضح) */
+    .btn-normal > button {{
+        background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #334155 100%) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        box-shadow: 0px 6px 25px rgba(148, 163, 184, 0.45) !important;
+    }}
+    .btn-normal > button:hover {{
+        transform: scale(1.02);
+        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #475569 100%) !important;
+    }}
+
+    /* زر قسم المكفوفين (ألوان القمر الفضية اللامعة مع نص داكن واضح جداً) */
+    .btn-blind > button {{
+        background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #64748b 100%) !important;
+        color: #0f172a !important;
+        border: 1px solid rgba(255, 255, 255, 0.7) !important;
+        box-shadow: 0px 6px 25px rgba(241, 245, 249, 0.35) !important;
+    }}
+    .btn-blind > button:hover {{
         transform: scale(1.02);
         background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%) !important;
-        box-shadow: 0px 8px 30px rgba(255, 255, 255, 0.6) !important;
-    }
+    }}
 
     /* بطاقة الشرح والتفاصيل الاحترافية */
-    .info-card {
+    .info-card {{
         background: rgba(15, 23, 42, 0.78);
         border: 1px solid rgba(0, 210, 255, 0.25);
         border-radius: 20px;
@@ -149,20 +156,20 @@ st.markdown(
         backdrop-filter: blur(10px);
         position: relative;
         z-index: 2;
-    }
-    .info-card h3 {
+    }}
+    .info-card h3 {{
         color: #00d2ff;
         font-size: 24px;
         margin-bottom: 15px;
         font-weight: 800;
         text-align: center;
-    }
-    .info-card p {
+    }}
+    .info-card p {{
         color: #e2e8f0;
         font-size: 16px;
         line-height: 1.8;
         margin-bottom: 12px;
-    }
+    }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -172,18 +179,7 @@ st.markdown(
 header_col1, header_col2, header_col3 = st.columns([2, 2, 2])
 
 with header_col1:
-  st.markdown(
-      """
-        <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="https://raw.githubusercontent.com/NebulousDrift-team/Nebulous-Drift-project/main/logo.png" class="team-logo-img" alt="Team Logo">
-            <div>
-                <div style="font-size: 13px; color: #cbd5e1; font-weight: 600;">Nebulous Drift</div>
-                <div style="font-size: 11px; color: #94a3b8;">S/W Analytics Grp</div>
-            </div>
-        </div>
-        """,
-      unsafe_allow_html=True,
-  )
+  st.image(logo_file, width=65)
 
 with header_col2:
   st.markdown(
@@ -335,7 +331,7 @@ else:
       "Provides full voice and audio assistance for visually impaired users."
   )
 
-# 1. القمر العملاق والفوهات + العنوان الرئيسي والوصف
+# 1. القمر العملاق وفوهات + العنوان الرئيسي والوصف
 st.markdown(
     f"""
     <div class="hero-wrapper">
@@ -369,7 +365,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 4. شرح قسم المكفوفين أولاً
+# 4. شرح قسم المكفوفين
 st.markdown(
     f"""
     <div class="info-card">
