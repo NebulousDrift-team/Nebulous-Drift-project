@@ -5,7 +5,7 @@ st.set_page_config(
     page_title="Nebulous Vision", page_icon="🌙", layout="wide"
 )
 
-# تصميم الواجهة الاحترافي والمطابق لطلباتك بدقة
+# تصميم الواجهة المطور بدقة مطابقة لطلباتك وصورة القمر الحقيقية
 st.markdown(
     """
     <style>
@@ -15,96 +15,103 @@ st.markdown(
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
     
-    /* شعار ناسا الأصلي في الأعلى على الجنب */
+    /* شعار ناسا الأصلي مكبر وفي مكانه في الزاوية */
     .top-header {
         width: 100%;
         display: flex;
         justify-content: flex-end;
-        padding: 20px 40px;
+        padding: 25px 45px;
         position: absolute;
         top: 0;
         right: 0;
-        z-index: 10;
+        z-index: 20;
     }
     .nasa-logo {
-        width: 75px;
+        width: 110px;
         height: auto;
-        filter: drop-shadow(0 0 12px rgba(0, 210, 255, 0.5));
+        filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
     }
 
-    /* حاوية المنتصف الشاملة للقمر والعنوان */
+    /* حاوية المنتصف المتوازنة بدون فراغات مزعجة */
     .hero-wrapper {
         position: relative;
         width: 100%;
-        min-height: 80vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 40px 20px;
+        padding-top: 30px;
+        padding-bottom: 20px;
     }
 
-    /* قمر 3D احترافي في الخلفية بظلال وتجسيم كروي مذهل */
-    .moon-3d {
+    /* قمر ضخم جداً في الخلفية بتفاصيل وفوهات حقيقية وتدريج فخم */
+    .moon-huge {
         position: absolute;
-        width: 390px;
-        height: 390px;
-        background: radial-gradient(circle at 35% 35%, #64748b 0%, #334155 35%, #0f172a 70%, #020408 95%);
+        width: 520px;
+        height: 520px;
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
+        background-size: cover;
+        background-position: center;
         border-radius: 50%;
         z-index: 0;
-        box-shadow: inset -50px -50px 80px rgba(0, 0, 0, 0.95), 0 0 60px rgba(0, 210, 255, 0.25);
-        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 95%);
-        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 95%);
-        opacity: 0.9;
+        opacity: 0.75;
+        box-shadow: inset -70px -70px 100px rgba(0, 0, 0, 0.9), 0 0 70px rgba(0, 210, 255, 0.3);
+        -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 85%);
+        mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 85%);
     }
 
-    /* اسم التطبيق في المنتصف، كبير ولامع بتدريج الأزرق والرمادي */
+    /* اسم التطبيق في النص، ضخم ولامع بتدريج الأزرق والرمادي الفخم */
     .main-title {
-        font-size: 64px;
+        font-size: 68px;
         font-weight: 900;
-        background: linear-gradient(135deg, #00d2ff 20%, #cbd5e1 80%);
+        background: linear-gradient(135deg, #00d2ff 25%, #e2e8f0 85%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 40px rgba(0, 210, 255, 0.5);
-        margin-bottom: 15px;
+        text-shadow: 0 0 45px rgba(0, 210, 255, 0.6);
+        margin-bottom: 10px;
         position: relative;
         z-index: 2;
         letter-spacing: 1px;
     }
 
-    /* الوصف تحت العنوان */
+    /* الوصف تحت العنوان مباشرة بدون فراغات */
     .sub-title {
         font-size: 20px;
-        color: #94a3b8;
-        margin-bottom: 40px;
+        color: #cbd5e1;
+        margin-bottom: 25px;
         position: relative;
         z-index: 2;
-        line-height: 1.6;
+        line-height: 1.5;
         font-weight: 500;
     }
 
-    /* الأزرار في المنتصف، ضخمة وبدون أي إيموجي */
+    /* تنسيق الأزرار لتكون متناسقة وقريبة من المحتوى من غير مساحات فاضية */
+    .stButton {
+        display: flex;
+        justify-content: center;
+    }
+    
     .stButton > button {
         background: linear-gradient(135deg, #00d2ff, #1d4ed8);
         color: white;
         font-size: 20px;
         font-weight: bold;
         border-radius: 18px;
-        width: 420px;
+        width: 400px;
         max-width: 100%;
-        height: 65px;
+        height: 60px;
         border: none;
-        box-shadow: 0px 6px 20px rgba(0, 210, 255, 0.35);
+        box-shadow: 0px 6px 22px rgba(0, 210, 255, 0.4);
         transition: all 0.3s ease;
         position: relative;
         z-index: 2;
-        margin: 10px auto;
+        margin: 6px auto;
     }
     
     .stButton > button:hover {
         transform: scale(1.02);
-        box-shadow: 0px 8px 25px rgba(0, 210, 255, 0.55);
+        box-shadow: 0px 8px 30px rgba(0, 210, 255, 0.6);
         background: linear-gradient(135deg, #38bdf8, #2563eb);
     }
     </style>
@@ -112,13 +119,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# الشريط الجانبي لاختيار اللغات
+# القائمة الجانبية للغات
 lang = st.sidebar.selectbox(
     "🌍 Choose Language / اختر اللغة",
     ["العربية", "English", "Русский", "Français", "Deutsch"],
 )
 
-# النصوص بدون أي إيموجي
+# النصوص بدون أي إيموجي نهائياً
 if lang == "العربية":
   subtitle = (
       "استعد لاكتشاف القمر وتفاصيله وموارده<br>من إنشاء فريق انحراف سديمي"
@@ -154,7 +161,7 @@ else:
   btn_normal = "Start Exploration"
   btn_blind = "Accessibility Mode"
 
-# عرض شعار ناسا الأصلي في الجنب
+# عرض شعار ناسا الأصلي مكبر في الزاوية
 st.markdown(
     """
     <div class="top-header">
@@ -164,11 +171,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# القمر الـ 3D في الخلفية واسم التطبيق في النص
+# القمر الضخم الحقيقي في الخلفية واسم التطبيق والوصف متقاربين وبدون فراغات
 st.markdown(
     f"""
     <div class="hero-wrapper">
-        <div class="moon-3d"></div>
+        <div class="moon-huge"></div>
         <h1 class="main-title">Nebulous Vision</h1>
         <p class="sub-title">{subtitle}</p>
     </div>
@@ -176,7 +183,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# الأزرار في المنتصف وبحجم كبير ومنسق
+# الأزرار مترتبة تحت بعضها بمسافات مضبوطة
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
   if st.button(btn_normal):
