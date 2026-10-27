@@ -6,7 +6,7 @@ st.set_page_config(
     page_title="Nebulous Vision", page_icon="🌙", layout="wide"
 )
 
-# اكتشاف صورة الشعار تلقائياً أياً كان اسمها المرفوع
+# اكتشاف صورة الشعار تلقائياً
 logo_file = "logo.png"
 for f in [
     "logo.png",
@@ -18,7 +18,7 @@ for f in [
     logo_file = f
     break
 
-# تصميم الواجهة المطور بدون مربعات وبألوان وتنسيق عالي الدقة
+# تصميم الواجهة الاحترافي بدون مربعات وبألوان وتنسيق عالي الدقة
 st.markdown(
     """
     <style>
@@ -28,7 +28,7 @@ st.markdown(
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
     
-    /* الهيدر العلوي: شعار الفريق، مختار اللغات مع 🌐، وشعار ناسا */
+    /* الهيدر العلوي */
     .top-header {
         width: 100%;
         display: flex;
@@ -58,7 +58,7 @@ st.markdown(
         padding-bottom: 10px;
     }
 
-    /* قمر عملاق جداً في الخلفية بتفاصيل وفوهات حقيقية وتدريج فخم */
+    /* قمر عملاق في الخلفية بتفاصيل وفوهات حقيقية */
     .moon-huge {
         position: absolute;
         width: 700px;
@@ -74,7 +74,7 @@ st.markdown(
         mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
     }
 
-    /* اسم التطبيق ضخم ولامع بتدريج الأزرق والرمادي */
+    /* اسم التطبيق ضخم ولامع */
     .main-title {
         font-size: 76px;
         font-weight: 900;
@@ -98,7 +98,7 @@ st.markdown(
         font-weight: 500;
     }
 
-    /* تنسيق الأزرار مع ضمان ظهور النص الداكن بوضوح تام بدون انتظار */
+    /* تنسيق الأزرار */
     .stButton > button {
         font-size: 20px !important;
         font-weight: bold !important;
@@ -120,4 +120,256 @@ st.markdown(
     .btn-normal > button:hover {
         transform: scale(1.02);
         background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%) !important;
-        color: #
+        color: #000000 !important;
+    }
+
+    /* زر قسم المكفوفين (أبيض فضي لامع بألوان القمر) */
+    .btn-blind > button {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%) !important;
+        color: #020617 !important;
+        border: 1px solid rgba(255, 255, 255, 0.8) !important;
+        box-shadow: 0px 6px 25px rgba(248, 250, 252, 0.35) !important;
+    }
+    .btn-blind > button:hover {
+        transform: scale(1.02);
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%) !important;
+        color: #0f172a !important;
+    }
+
+    /* تصميم النصوص والشرح مباشرة على الخلفية بدون صناديق */
+    .clean-section {
+        max-width: 750px;
+        margin: 30px auto;
+        text-align: right;
+        position: relative;
+        z-index: 2;
+        padding: 0 20px;
+    }
+    .clean-section h3 {
+        color: #94a3b8;
+        font-size: 22px;
+        margin-bottom: 12px;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+    .clean-section p {
+        color: #94a3b8;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 10px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# هيدر الواجهة
+header_col1, header_col2, header_col3 = st.columns([2, 2, 2])
+
+with header_col1:
+  st.image(logo_file, width=65)
+
+with header_col2:
+  st.markdown(
+      """
+        <div style="text-align: center; padding-top: 5px;">
+            <span style="color: #cbd5e1; font-weight: bold; font-size: 14px;">🌐 اللغات / Languages</span>
+        </div>
+        """,
+      unsafe_allow_html=True,
+  )
+  lang = st.selectbox(
+      "",
+      ["العربية", "English", "Русский", "Français", "Deutsch"],
+      label_visibility="collapsed",
+  )
+
+with header_col3:
+  st.markdown(
+      """
+        <div style="text-align: left;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" class="nasa-logo" alt="NASA Logo">
+        </div>
+        """,
+      unsafe_allow_html=True,
+  )
+
+# ترجمة النصوص حسب اللغات
+if lang == "العربية":
+  subtitle = (
+      "استعد لاكتشاف القمر وتفاصيله وموارده<br>من إنشاء فريق انحراف سديمي"
+  )
+  btn_normal = "أبدأ الاستكشاف"
+  btn_blind = "قسم المكفوفين (الاستكشاف الصوتي)"
+  card_title = "ما هو تطبيق نيبلوز فيشون؟"
+  card_text1 = (
+      "• <b>الهدف الرئيسي:</b> تطبيق متطور لمساعدة الباحثين والهواة والرحلات"
+      " المستقبلية على اكتشاف القمر، دراسة تفاصيله السطحية، وتحليل موارده بدقة"
+      " عالية."
+  )
+  card_text2 = (
+      "• <b>فريق العمل:</b> تم تطوير هذا المشروع الإبداعي بواسطة فريق <b>انحراف"
+      " سديمي (Nebulous Drift S/W Analytics Grp)</b> خصيصاً للمشاركة في مسابقة"
+      " ناسا العالمية (NASA Space Apps Challenge)."
+  )
+  card_text3 = (
+      "• <b>التواصل والدعم:</b> نعمل باستمرار على تقديم تجربة استثنائية؛ لو"
+      " واجهتكم أي مشاكل تقنية أو استفسارات، يسعدنا تواصلكم معنا."
+  )
+  blind_title = "شرح قسم المكفوفين (الاستكشاف الصوتي)"
+  blind_desc = (
+      "يوفر هذا القسم واجهة وصول كاملة مجهزة بالاستكشاف الصوتي، وتحويل البيانات"
+      " البصرية ومنحنيات الإضاءة إلى إشارات صوتية مساعدة، لتمكين المكفوفين وضعاف"
+      " البصر من استكشاف تفاصيل القمر وبياناته بكل سهولة."
+  )
+elif lang == "Русский":
+  subtitle = (
+      "Приготовьтесь исследовать Луну, ее детали и ресурсы<br>Создано командой"
+      " Nebulous Drift"
+  )
+  btn_normal = "Начать исследование"
+  btn_blind = "Для слабовидящих"
+  card_title = "Что такое приложение Nebulous Vision?"
+  card_text1 = (
+      "• <b>Основная цель:</b> Передовое приложение, помогающее исследователям,"
+      " любителям и будущим лунным миссиям исследовать Луну и ее ресурсы."
+  )
+  card_text2 = (
+      "• <b>Команда:</b> Разработано командой <b>Nebulous Drift</b> для хакатона"
+      " NASA Space Apps Challenge."
+  )
+  card_text3 = (
+      "• <b>Поддержка:</b> Если у вас возникли вопросы или проблемы, свяжитесь"
+      " с нами."
+  )
+  blind_title = "Раздел доступности (Аудио-исследование)"
+  blind_desc = (
+      "Этот раздел предоставляет полный интерфейс голосового доступа и"
+      " звукового сопровождения данных для слабовидящих."
+  )
+elif lang == "Français":
+  subtitle = (
+      "Préparez-vous à explorer la Lune, ses détails et ses ressources<br>Créé"
+      " par l'équipe Nebulous Drift"
+  )
+  btn_normal = "Commencer l'exploration"
+  btn_blind = "Mode accessibilité"
+  card_title = "Qu'est-ce que Nebulous Vision ?"
+  card_text1 = (
+      "• <b>Objectif :</b> Une application avancée pour explorer la Lune et"
+      " ses ressources."
+  )
+  card_text2 = (
+      "• <b>Équipe :</b> Créé par l'équipe <b>Nebulous Drift</b> pour le NASA"
+      " Space Apps Challenge."
+  )
+  card_text3 = (
+      "• <b>Support :</b> Contactez-nous en cas de problème technique."
+  )
+  blind_title = "Section Accessibilité (Exploration Vocale)"
+  blind_desc = (
+      "Cette section offre un accès audio et vocal pour les utilisateurs"
+      " malvoyants."
+  )
+elif lang == "Deutsch":
+  subtitle = (
+      "Bereiten Sie sich darauf vor, den Mond zu erkunden<br>Erstellt vom"
+      " Nebulous Drift Team"
+  )
+  btn_normal = "Erkundung starten"
+  btn_blind = "Barrierefreiheit"
+  card_title = "Was ist Nebulous Vision?"
+  card_text1 = (
+      "• <b>Ziel:</b> Eine fortschrittliche App zur Erkundung des Mondes und"
+      " seiner Ressourcen."
+  )
+  card_text2 = (
+      "• <b>Team:</b> Entwickelt vom <b>Nebulous Drift</b> Team für die NASA"
+      " Space Apps Challenge."
+  )
+  card_text3 = (
+      "• <b>Support:</b> Bei Fragen oder Problemen kontaktieren Sie uns."
+  )
+  blind_title = "Barrierefreiheit (Audio-Erkundung)"
+  blind_desc = (
+      "Dieser Bereich bietet Sprach- und Audiounterstützung für"
+      " Sehbehinderte."
+  )
+else:
+  subtitle = (
+      "Get ready to explore the Moon, its details, and resources<br>Created by"
+      " Nebulous Drift Team"
+  )
+  btn_normal = "Start Exploration"
+  btn_blind = "Accessibility Mode"
+  card_title = "What is Nebulous Vision?"
+  card_text1 = (
+      "• <b>Main Goal:</b> An advanced application to help researchers, hobbyists,"
+      " and lunar missions explore the Moon and its resources."
+  )
+  card_text2 = (
+      "• <b>Team:</b> Developed by the <b>Nebulous Drift</b> team for the NASA"
+      " Space Apps Challenge."
+  )
+  card_text3 = (
+      "• <b>Support:</b> Contact us if you encounter any technical issues."
+  )
+  blind_title = "Accessibility Section (Audio Exploration)"
+  blind_desc = (
+      "Provides full voice and audio assistance for visually impaired users."
+  )
+
+# القمر والعنوان
+st.markdown(
+    f"""
+    <div class="hero-wrapper">
+        <div class="moon-huge"></div>
+        <h1 class="main-title">Nebulous Vision</h1>
+        <p class="sub-title">{subtitle}</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+col1, col2, col3 = st.columns([1, 2, 1])
+
+# زرار أبدأ العادي
+with col2:
+  st.markdown('<div class="btn-normal">', unsafe_allow_html=True)
+  if st.button(btn_normal, key="normal_btn"):
+    st.success("تم تفعيل وضع الاستكشاف بنجاح!")
+  st.markdown("</div>", unsafe_allow_html=True)
+
+# شرح التطبيق
+st.markdown(
+    f"""
+    <div class="clean-section">
+        <h3>{card_title}</h3>
+        <p>{card_text1}</p>
+        <p>{card_text2}</p>
+        <p>{card_text3}</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# شرح قسم المكفوفين
+st.markdown(
+    f"""
+    <div class="clean-section">
+        <h3>{blind_title}</h3>
+        <p>{blind_desc}</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# زرار قسم المكفوفين
+with col2:
+  st.markdown('<div class="btn-blind">', unsafe_allow_html=True)
+  if st.button(btn_blind, key="blind_btn"):
+    st.info("جاري تفعيل واجهة الاستكشاف الصوتي وقراءة البيانات للمكفوفين...")
+  st.markdown("</div>", unsafe_allow_html=True)
+
+st.write("<br><br>", unsafe_allow_html=True)
