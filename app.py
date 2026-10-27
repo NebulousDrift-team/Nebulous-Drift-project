@@ -15,7 +15,7 @@ st.markdown(
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
     
-    /* الهيدر العلوي يضم شعار الفريق، مختار اللغات مع أيقونة 🌐، وشعار ناسا */
+    /* الهيدر العلوي: شعار الفريق، مختار اللغات مع 🌐، وشعار ناسا */
     .top-header {
         width: 100%;
         display: flex;
@@ -26,21 +26,13 @@ st.markdown(
         z-index: 20;
     }
     
-    .team-badge {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: rgba(15, 23, 42, 0.85);
-        border: 2px solid rgba(0, 210, 255, 0.4);
-        padding: 8px 18px;
-        border-radius: 50px;
-        box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-    }
-    .team-badge span {
-        color: #38bdf8;
-        font-weight: bold;
-        font-size: 15px;
-        letter-spacing: 1px;
+    .team-logo-img {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #00d2ff;
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
     }
     
     .nasa-logo {
@@ -65,22 +57,22 @@ st.markdown(
     /* قمر عملاق جداً في الخلفية بتفاصيل وفوهات حقيقية وتدريج فخم */
     .moon-huge {
         position: absolute;
-        width: 620px;
-        height: 620px;
+        width: 700px;
+        height: 700px;
         background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 50%;
         z-index: 0;
-        opacity: 0.82;
-        box-shadow: inset -90px -90px 120px rgba(0, 0, 0, 0.95), 0 0 90px rgba(0, 210, 255, 0.35);
+        opacity: 0.85;
+        box-shadow: inset -100px -100px 140px rgba(0, 0, 0, 0.95), 0 0 100px rgba(0, 210, 255, 0.4);
         -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
         mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
     }
 
     /* اسم التطبيق ضخم ولامع بتدريج الأزرق والرمادي */
     .main-title {
-        font-size: 74px;
+        font-size: 76px;
         font-weight: 900;
         background: linear-gradient(135deg, #00d2ff 25%, #e2e8f0 85%);
         -webkit-background-clip: text;
@@ -102,46 +94,46 @@ st.markdown(
         font-weight: 500;
     }
 
-    /* زر أبدأ العادي (رمادي مدرج أسود زي القمر) */
+    /* زر أبدأ العادي (رمادي لامع فخم) */
     .btn-normal > button {
-        background: linear-gradient(135deg, #334155 0%, #1e293b 50%, #020408 100%) !important;
-        color: white !important;
+        background: linear-gradient(135deg, #94a3b8 0%, #64748b 50%, #334155 100%) !important;
+        color: #ffffff !important;
         font-size: 21px !important;
         font-weight: bold !important;
         border-radius: 18px !important;
         width: 420px !important;
         max-width: 100% !important;
         height: 65px !important;
-        border: 1px solid rgba(148, 163, 184, 0.35) !important;
-        box-shadow: 0px 6px 22px rgba(15, 23, 42, 0.7) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        box-shadow: 0px 6px 25px rgba(148, 163, 184, 0.45) !important;
         transition: all 0.3s ease !important;
         margin: 10px auto !important;
     }
     .btn-normal > button:hover {
         transform: scale(1.02);
-        background: linear-gradient(135deg, #475569 0%, #334155 50%, #1e293b 100%) !important;
-        box-shadow: 0px 8px 28px rgba(0, 210, 255, 0.4) !important;
+        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #475569 100%) !important;
+        box-shadow: 0px 8px 30px rgba(255, 255, 255, 0.4) !important;
     }
 
-    /* زر قسم المكفوفين (أزرق على رمادي على أسود) */
+    /* زر قسم المكفوفين (رمادي أبيض ألوان القمر اللامعة مع نص داكن واضح للرؤية) */
     .btn-blind > button {
-        background: linear-gradient(135deg, #0284c7 0%, #334155 50%, #020408 100%) !important;
-        color: white !important;
+        background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #64748b 100%) !important;
+        color: #0f172a !important;
         font-size: 20px !important;
         font-weight: bold !important;
         border-radius: 18px !important;
         width: 420px !important;
         max-width: 100% !important;
         height: 65px !important;
-        border: 1px solid rgba(0, 210, 255, 0.4) !important;
-        box-shadow: 0px 6px 22px rgba(2, 132, 199, 0.4) !important;
+        border: 1px solid rgba(255, 255, 255, 0.7) !important;
+        box-shadow: 0px 6px 25px rgba(241, 245, 249, 0.35) !important;
         transition: all 0.3s ease !important;
         margin: 10px auto !important;
     }
     .btn-blind > button:hover {
         transform: scale(1.02);
-        background: linear-gradient(135deg, #0369a1 0%, #475569 50%, #0f172a 100%) !important;
-        box-shadow: 0px 8px 28px rgba(0, 210, 255, 0.6) !important;
+        background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%) !important;
+        box-shadow: 0px 8px 30px rgba(255, 255, 255, 0.6) !important;
     }
 
     /* بطاقة الشرح والتفاصيل الاحترافية */
@@ -176,16 +168,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# هيدر الواجهة: شعار فريقنا، مختار اللغات مع 🌐، وشعار ناسا
+# هيدر الواجهة: شعار الفريق (صورة)، مختار اللغات مع 🌐، وشعار ناسا
 header_col1, header_col2, header_col3 = st.columns([2, 2, 2])
 
 with header_col1:
   st.markdown(
       """
-        <div class="team-badge">
-            <span style="font-size: 20px;">🪐</span>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://raw.githubusercontent.com/NebulousDrift-team/Nebulous-Drift-project/main/logo.png" class="team-logo-img" alt="Team Logo">
             <div>
-                <div style="font-size: 13px; color: #cbd5e1; font-weight: 600;">Nebulous Drift Team</div>
+                <div style="font-size: 13px; color: #cbd5e1; font-weight: 600;">Nebulous Drift</div>
                 <div style="font-size: 11px; color: #94a3b8;">S/W Analytics Grp</div>
             </div>
         </div>
@@ -357,14 +349,14 @@ st.markdown(
 
 col1, col2, col3 = st.columns([1, 2, 1])
 
-# 2. زرار "أبدأ الاستكشاف" العادي (رمادي مدرج أسود زي القمر)
+# 2. زرار "أبدأ الاستكشاف" العادي (رمادي لامع)
 with col2:
   st.markdown('<div class="btn-normal">', unsafe_allow_html=True)
   if st.button(btn_normal, key="normal_btn"):
     st.success("تم تفعيل وضع الاستكشاف بنجاح!")
   st.markdown("</div>", unsafe_allow_html=True)
 
-# 3. شرح التطبيق ("ما هو تطبيق نيبلوز فيشون؟") تحت أبدأ
+# 3. شرح التطبيق ("ما هو تطبيق نيبلوز فيشون؟")
 st.markdown(
     f"""
     <div class="info-card">
@@ -377,20 +369,23 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# 4. زرار المكفوفين تحته (أزرق على رمادي على أسود)
-with col2:
-  st.markdown('<div class="btn-blind">', unsafe_allow_html=True)
-  if st.button(btn_blind, key="blind_btn"):
-    st.info("جاري تفعيل واجهة الاستكشاف الصوتي وقراءة البيانات للمكفوفين...")
-  st.markdown("</div>", unsafe_allow_html=True)
-
-# 5. شرح قسم المكفوفين تحت زرار المكفوفين مباشرة
+# 4. شرح قسم المكفوفين أولاً
 st.markdown(
     f"""
-    <div class="info-card" style="margin-bottom: 50px;">
+    <div class="info-card">
         <h3 style="color: #38bdf8;">{blind_title}</h3>
         <p>{blind_desc}</p>
     </div>
     """,
     unsafe_allow_html=True,
 )
+
+# 5. زرار قسم المكفوفين (ألوان القمر اللامعة: رمادي أبيض فخم) تحت الشرح
+with col2:
+  st.markdown('<div class="btn-blind">', unsafe_allow_html=True)
+  if st.button(btn_blind, key="blind_btn"):
+    st.info("جاري تفعيل واجهة الاستكشاف الصوتي وقراءة البيانات للمكفوفين...")
+  st.markdown("</div>", unsafe_allow_html=True)
+
+# مسافة ختامية مريحة للعين
+st.write("<br><br>", unsafe_allow_html=True)
