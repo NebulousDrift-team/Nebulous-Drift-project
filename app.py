@@ -270,7 +270,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: قمر ناسا الفلكي الواقعي بملء الشاشة
+# الحالة الثانية: مجسم قمر ناسا الفلكي الكامل 3D بملء الشاشة
 # ==========================================
 else:
   st.markdown(
@@ -283,7 +283,7 @@ else:
     }
     .top-controls {
         position: fixed;
-        top: 10px;
+        top: 15px;
         left: 20px;
         z-index: 999;
     }
@@ -311,7 +311,6 @@ else:
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script>
-            // تهيئة المشهد والكاميرا
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -322,15 +321,15 @@ else:
             const controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minDistance = 2.0;
-            controls.maxDistance = 8.0;
+            controls.minDistance = 1.8;
+            controls.maxDistance = 7.0;
 
-            // 1. نجوم خلفية ناعمة ودائرية
+            // 1. نجوم فضاء خلفية دائرية ناعمة وبرّاقة
             const starsGeometry = new THREE.BufferGeometry();
-            const starsCount = 2000;
+            const starsCount = 2500;
             const starPositions = new Float32Array(starsCount * 3);
             for(let i = 0; i < starsCount * 3; i++) {
-                starPositions[i] = (Math.random() - 0.5) * 400;
+                starPositions[i] = (Math.random() - 0.5) * 500;
             }
             starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
             
@@ -346,47 +345,47 @@ else:
 
             const starsMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
-                size: 1.5,
+                size: 1.2,
                 map: starTexture,
                 transparent: true,
-                opacity: 0.8,
+                opacity: 0.85,
                 blending: THREE.AdditiveBlending
             });
             const starField = new THREE.Points(starsGeometry, starsMaterial);
             scene.add(starField);
 
-            // 2. هندسة كرة القمر بدقة عالية جداً مع تفعيل السماح الأمني CORS
+            // 2. هندسة كرة القمر الحقيقية مع خريطة أرشيف ناسا الكروية الصحيحة 100%
             const geometry = new THREE.SphereGeometry(1, 256, 256);
             const textureLoader = new THREE.TextureLoader();
-            textureLoader.crossOrigin = 'anonymous'; // حل مشكلة الحظر الأمني وظهور الشاشة السوداء
+            textureLoader.crossOrigin = 'anonymous';
             
-            const moonTexture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
+            // استخدام خريطة الأرشيف الكروية المعتمدة لضمان تطابق القطبين والفوهات
+            const moonTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg');
             
             const material = new THREE.MeshStandardMaterial({
                 map: moonTexture,
-                roughness: 0.9,
+                roughness: 0.85,
                 metalness: 0.05
             });
             
             const moon = new THREE.Mesh(geometry, material);
             scene.add(moon);
 
-            // 3. إضاءة فلكية متوازنة بالكامل
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+            // 3. إضاءة علمية متوازنة تظهر كل تفاصيل القمر كاملة من جميع الجهات دون أي قص أو حجب
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
             scene.add(ambientLight);
 
-            camera.position.z = 3.2;
+            camera.position.z = 2.8;
 
-            // 4. حلقة التحديث والرندر
+            // 4. حركة دوران هادئة وواقعية
             function animate() {
                 requestAnimationFrame(animate);
-                moon.rotation.y += 0.0004;
+                moon.rotation.y += 0.0003;
                 controls.update();
                 renderer.render(scene, camera);
             }
             animate();
 
-            // التوافق مع تغيير حجم الشاشة
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
@@ -396,4 +395,4 @@ else:
     </body>
     </html>
     """
-  components.html(moon_3d_html, height=680)
+  components.html(moon_3d_html, height=720)
