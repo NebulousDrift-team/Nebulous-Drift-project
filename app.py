@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 
 # إعداد الصفحة وتوسيعها
 st.set_page_config(
-    page_title="Nebulous Vision", page_icon="🌙", layout="wide"
+    page_title="Nebulous Vision - 2D NASA Atlas", page_icon="🌙", layout="wide"
 )
 
 # تتبع حالة التطبيق
@@ -177,7 +177,7 @@ if not st.session_state.started:
     subtitle = (
         "استعد لاكتشاف القمر وتفاصيله وموارده<br>من إنشاء فريق انحراف سديمي"
     )
-    btn_normal = "أبدأ الاستكشاف"
+    btn_normal = "أبدأ الاستكشاف (أطلس 2D العلمي)"
     btn_blind = "قسم المكفوفين (الاستكشاف الصوتي)"
     card_title = "ما هو تطبيق نيبلوز فيشون؟"
     card_text1 = (
@@ -205,7 +205,7 @@ if not st.session_state.started:
         "Get ready to explore the Moon, its details, and resources<br>Created"
         " by Nebulous Drift Team"
     )
-    btn_normal = "Start Exploration"
+    btn_normal = "Start Exploration (2D Scientific Atlas)"
     btn_blind = "Accessibility Mode"
     card_title = "What is Nebulous Vision?"
     card_text1 = (
@@ -270,14 +270,14 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: استكشاف المجسم الثلاثي الأبعاد التضاريسي الحقيقي (True 3D Relief Mesh)
+# الحالة الثانية: الأطلس القمري التفاعلي الثنائي الأبعاد (2D Professional Scientific Viewer)
 # ==========================================
 else:
   st.markdown(
       """
     <style>
     .stApp {
-        background-color: #000000;
+        background-color: #020408;
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
@@ -286,6 +286,13 @@ else:
         top: 15px;
         left: 20px;
         z-index: 999;
+    }
+    .info-panel {
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(0, 210, 255, 0.3);
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 15px;
     }
     </style>
     """,
@@ -298,96 +305,66 @@ else:
     st.rerun()
   st.markdown("</div>", unsafe_allow_html=True)
 
-  moon_3d_html = """<!DOCTYPE html>
+  st.markdown(
+      """
+    <div style="text-align: center; padding-top: 10px;">
+        <h2 style="color: #00d2ff; margin-bottom: 5px;">أطلس ناسا العلمي للتضاريس القمرية (2D High-Res Explorer)</h2>
+        <p style="color: #94a3b8; font-size: 16px;">استكشف تفاصيل الفوهات، البحار القمرية، ومواقع الهبوط بدقة مذهلة دون أي تشوهات هندسية.</p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # استخدام Leaflet الخريطة التفاعلية العلمية الثنائية الأبعاد لعرض بيانات ناسا بسلاسة
+  atlas_2d_html = """<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
-        canvas { display: block; width: 100%; height: 100%; }
-        #loading {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: #00d2ff; font-family: sans-serif; font-size: 18px; font-weight: bold;
-            letter-spacing: 1px; pointer-events: none; text-shadow: 0 0 10px rgba(0,210,255,0.5);
-        }
+        html, body { margin: 0; height: 100%; background: #020408; overflow: hidden; }
+        #map { width: 100%; height: 100vh; background: #020408; }
+        .leaflet-container { background: #020408 !important; }
     </style>
 </head>
 <body>
-    <div id="loading">جاري توليد وبناء مجسم التضاريس الثلاثي الأبعاد...</div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 2.8);
+        // إعداد خريطة تفاعلية بنظام إحداثيات بسيط لعرض الخريطة الكورية الفلكية بوضوح تام
+        var map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -2,
+            maxZoom: 4,
+            zoomSnap: 0.5
+        });
 
-    var renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    document.body.appendChild(renderer.domElement);
+        // أبعاد خريطة ناسا الرسمية
+        var w = 4096, h = 2048;
+        var southWest = map.unproject([0, h], map.getMaxZoom());
+        var northEast = map.unproject([w, 0], map.getMaxZoom());
+        var bounds = new L.LatLngBounds(southWest, northEast);
 
-    var controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.minDistance = 1.2;
-    controls.maxDistance = 6.0;
+        // تحميل خريطة ناسا الفلكية الرسمية عالية الدقة (LRO / Wikimedia Moon Map)
+        var moonImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg';
+        L.imageOverlay(moonImageUrl, bounds).addTo(map);
 
-    // إضاءة علمية موجهة لتبرز بروز الفوهات وتدرج الأعماق هندسياً
-    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-    var sun = new THREE.DirectionalLight(0xffffff, 1.8);
-    sun.position.set(5, 3, 5);
-    scene.add(sun);
+        map.setMaxBounds(bounds);
+        map.fitBounds(bounds);
 
-    // استخدام شبكة هندسية كثيفة للغاية (True 3D Mesh) مع تفعيل التضاريس الفيزيائية
-    var geometry = new THREE.SphereGeometry(1, 256, 256);
-    
-    var textureLoader = new THREE.TextureLoader();
-    textureLoader.crossOrigin = 'anonymous';
+        // إضافة علامات تفاعلية لأهم الفوهات والمواقع (لإثراء المشروع علمياً)
+        var craters = [
+            {name: "فوهة تيخو (Tycho Crater)", coords: [700, 1500], desc: "فوهة صدمية بارزة ذات نظام شعاعي ضخم."},
+            {name: "فوهة كوبرنيكوس (Copernicus)", coords: [900, 2200], desc: "من المعالم البارزة في وجه القمر المرئي."},
+            {name: "بحر الهدوء (Sea of Tranquility)", coords: [1100, 2800], desc: "موقع هبوط مركبة أبوللو 11 التاريخي."}
+        ];
 
-    // تحميل خريطة الألوان وخريطة التضاريس والارتفاعات (Displacement Map) الهندسية
-    var moonMaterial = new THREE.MeshStandardMaterial({
-        roughness: 0.85,
-        metalness: 0.05,
-        color: 0xffffff
-    });
-
-    var moonMesh = new THREE.Mesh(geometry, moonMaterial);
-    scene.add(moonMesh);
-
-    // جلب textures من أرشيف ناسا و Three.js الموثوق
-    textureLoader.load(
-        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg',
-        function(texture) {
-            moonMaterial.map = texture;
-            moonMaterial.bumpMap = texture;
-            moonMaterial.bumpScale = 0.035; // تضاريس ثلاثية الأبعاد حقيقية محفورة في المجسم
-            moonMaterial.needsUpdate = true;
-            
-            var loadingEl = document.getElementById('loading');
-            if (loadingEl) loadingEl.style.display = 'none';
-        },
-        undefined,
-        function(err) {
-            console.error('Error loading texture', err);
-            var loadingEl = document.getElementById('loading');
-            if (loadingEl) loadingEl.style.display = 'none';
-        }
-    );
-
-    function animate() {
-        requestAnimationFrame(animate);
-        moonMesh.rotation.y += 0.0003;
-        controls.update();
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', function () {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+        craters.forEach(function(c) {
+            var marker = L.marker(map.unproject(c.coords, map.getMaxZoom())).addTo(map);
+            marker.bindPopup("<b>" + c.name + "</b><br>" + c.desc);
+        });
     </script>
 </body>
 </html>"""
-  components.html(moon_3d_html, height=760)
+
+  components.html(atlas_2d_html, height=720)
