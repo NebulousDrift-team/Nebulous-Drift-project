@@ -270,7 +270,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: قمر ناسا الحقيقي 3D بدون تشوه
+# الحالة الثانية: قمر ناسا الحقيقي 3D المتطابق مع أرشيف ناسا
 # ==========================================
 else:
   st.markdown(
@@ -310,20 +310,20 @@ else:
   st.markdown(
       """
     <div class="title-area">
-        <h1 class="main-title-3d">Nebulous Vision: NASA 3D Lunar Archive</h1>
-        <p class="sub-instruction">استخدم الماوس لتدوير قمر ناسا الحقيقي، وعجلة الماوس (Scroll) للتكبير برؤية فائقة الوضوح من أرشيف وكالة ناسا</p>
+        <h1 class="main-title-3d">Nebulous Vision: NASA 3D Lunar Archive Explorer</h1>
+        <p class="sub-instruction">قمر حقيقي من أرشيف ناسا بـ 3D وتفاصيل فوهات دقيقة، مع إضاءة شمسية واقعية وخلفية نجوم الفضاء. استخدم الماوس للتدوير والتكبير والتفحص</p>
     </div>
     """,
       unsafe_allow_html=True,
   )
 
-  # كود القمر 3D المحسن بالكامل بدون أي تشوه أو قطع
+  # كود القمر 3D الحقيقي المطابق لأرشيف ناسا بدون أي تشوه أو قطع
   moon_3d_html = """
     <!DOCTYPE html>
     <html>
     <head>
         <style>
-            body { margin: 0; background-color: #020408; overflow: hidden; }
+            body { margin: 0; background-color: #000000; overflow: hidden; }
             canvas { display: block; }
         </style>
     </head>
@@ -332,7 +332,7 @@ else:
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script>
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
@@ -341,38 +341,61 @@ else:
             const controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minDistance = 1.5;
-            controls.maxDistance = 7;
+            controls.minDistance = 1.4;
+            controls.maxDistance = 6;
 
-            // هندسة كروية مثالية بدون أي تشوهات أو مسطحات
+            // 1. إضافة نجوم خلفية واقعية (Starfield) لتشبه الفضاء الحقيقي
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsCount = 1500;
+            const starPositions = new Float32Array(starsCount * 3);
+            for(let i = 0; i < starsCount * 3; i++) {
+                starPositions[i] = (Math.random() - 0.5) * 200;
+            }
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            const starsMaterial = new THREE.PointsMaterial({color: 0xffffff, size: 0.7});
+            const starField = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starField);
+
+            // 2. هندسة كرة القمر بدقة عالية جداً بدون مسطحات
             const geometry = new THREE.SphereGeometry(1, 128, 128);
             const textureLoader = new THREE.TextureLoader();
             
-            // تحميل نسيج عالي الدقة موثق من أرشيف ناسا
-            const moonTexture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
+            // نسيج أرشيف ناسا الرسمي للقمر
+            const moonTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg');
             
             const material = new THREE.MeshStandardMaterial({
                 map: moonTexture,
-                roughness: 0.9,
-                metalness: 0.05
+                roughness: 0.95,
+                metalness: 0.02
             });
             
             const moon = new THREE.Mesh(geometry, material);
             scene.add(moon);
 
-            // إضاءة شمسية واقعية جداً تبرز التضاريس والفوهات بشكل صحيح
-            const ambientLight = new THREE.AmbientLight(0x444444);
+            // 3. إضاءة محيطية وشمسية متوازنة لعدم قطع أو إخفاء أي جزء من القمر
+            const ambientLight = new THREE.AmbientLight(0x666666, 1.2); // إضاءة واضحة لكل تفاصيل القمر
             scene.add(ambientLight);
 
-            const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
-            sunLight.position.set(5, 3, 4);
+            const sunLight = new THREE.DirectionalLight(0xffffff, 2.0); // شمس موجهة
+            sunLight.position.set(5, 3, 5);
             scene.add(sunLight);
 
-            camera.position.z = 2.8;
+            // 4. مجسم مرئي للشمس في الخلفية يوضح مصدر الضوء
+            const sunGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffffee });
+            const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+            sunMesh.position.set(12, 6, 10);
+            scene.add(sunMesh);
 
+            // ربط ضوء الشمس بموقع مجسم الشمس
+            sunLight.position.copy(sunMesh.position);
+
+            camera.position.z = 2.6;
+
+            // حركة دوران واقعية هادئة حول المحور
             function animate() {
                 requestAnimationFrame(animate);
-                moon.rotation.y += 0.0008; // دوران هادئ وواقعي
+                moon.rotation.y += 0.0006; 
                 controls.update();
                 renderer.render(scene, camera);
             }
