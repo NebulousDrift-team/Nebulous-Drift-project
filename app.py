@@ -292,16 +292,12 @@ else:
       unsafe_allow_html=True,
   )
 
-  # زر العودة بتنسيق عائم وثابت لا يؤثر على شاشة القمر
-  st.markdown(
-      '<div class="top-controls">', unsafe_allow_html=True
-  )
+  st.markdown('<div class="top-controls">', unsafe_allow_html=True)
   if st.button("⬅ العودة للواجهة الرئيسية"):
     st.session_state.started = False
     st.rerun()
   st.markdown("</div>", unsafe_allow_html=True)
 
-  # كود القمر 3D الحقيقي بملء الشاشة مع نجوم ناعمة وإضاءة احترافية
   moon_3d_html = """
     <!DOCTYPE html>
     <html>
@@ -315,6 +311,7 @@ else:
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script>
+            // تهيئة المشهد والكاميرا
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -328,7 +325,7 @@ else:
             controls.minDistance = 2.0;
             controls.maxDistance = 8.0;
 
-            // 1. توليد نجوم دائرية ناعمة وبرّاقة في الخلفية (بدون مربعات حادة)
+            // 1. نجوم خلفية ناعمة ودائرية
             const starsGeometry = new THREE.BufferGeometry();
             const starsCount = 2000;
             const starPositions = new Float32Array(starsCount * 3);
@@ -337,7 +334,6 @@ else:
             }
             starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
             
-            // رسم نجوم دائرية ناعمة باستخدام Canvas دائري صغير كنسيج
             const canvas = document.createElement('canvas');
             canvas.width = 16;
             canvas.height = 16;
@@ -359,12 +355,12 @@ else:
             const starField = new THREE.Points(starsGeometry, starsMaterial);
             scene.add(starField);
 
-            // 2. هندسة كرة القمر بأعلى دقة لضمان تناسب الفوهات والقطبين في مكانهم الحقيقي
+            // 2. هندسة كرة القمر بدقة عالية جداً مع تفعيل السماح الأمني CORS
             const geometry = new THREE.SphereGeometry(1, 256, 256);
             const textureLoader = new THREE.TextureLoader();
+            textureLoader.crossOrigin = 'anonymous'; // حل مشكلة الحظر الأمني وظهور الشاشة السوداء
             
-            # نسيج القمر الحقيقي من أرشيف ناسا الرسمي
-            const moonTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg');
+            const moonTexture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
             
             const material = new THREE.MeshStandardMaterial({
                 map: moonTexture,
@@ -375,17 +371,13 @@ else:
             const moon = new THREE.Mesh(geometry, material);
             scene.add(moon);
 
-            # 3. إضاءة فلكية متوازنة توضح كل تفاصيل القمر والقطبين بوضوح تام دون أي قطع مظلم
-            const ambientLight = new THREE.AmbientLight(0x888888, 1.5);
+            // 3. إضاءة فلكية متوازنة بالكامل
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
             scene.add(ambientLight);
-
-            const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
-            sunLight.position.set(10, 5, 5);
-            scene.add(sunLight);
 
             camera.position.z = 3.2;
 
-            // 4. حركة دوران واقعية سلسة
+            // 4. حلقة التحديث والرندر
             function animate() {
                 requestAnimationFrame(animate);
                 moon.rotation.y += 0.0004;
@@ -394,6 +386,7 @@ else:
             }
             animate();
 
+            // التوافق مع تغيير حجم الشاشة
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
@@ -403,4 +396,4 @@ else:
     </body>
     </html>
     """
-  components.html(moon_3d_html, height=650)
+  components.html(moon_3d_html, height=680)
