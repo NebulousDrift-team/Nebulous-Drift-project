@@ -7,7 +7,7 @@ st.set_page_config(
     page_title="Nebulous Vision", page_icon="🌙", layout="wide"
 )
 
-# تتبع حالة التطبيق (هل المستخدم ضغط على ابدأ أم لا؟)
+# تتبع حالة التطبيق
 if "started" not in st.session_state:
   st.session_state.started = False
 
@@ -36,13 +36,11 @@ if not st.session_state.started:
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
-    
     .nasa-logo {
         width: 100px;
         height: auto;
         filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.6));
     }
-
     .hero-wrapper {
         position: relative;
         width: 100%;
@@ -54,7 +52,6 @@ if not st.session_state.started:
         padding-top: 20px;
         padding-bottom: 10px;
     }
-
     .moon-huge {
         position: absolute;
         width: 700px;
@@ -69,7 +66,6 @@ if not st.session_state.started:
         -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
         mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
     }
-
     .main-title {
         font-size: 76px;
         font-weight: 900;
@@ -82,7 +78,6 @@ if not st.session_state.started:
         z-index: 2;
         letter-spacing: 1px;
     }
-
     .sub-title {
         font-size: 21px;
         color: #cbd5e1;
@@ -92,7 +87,6 @@ if not st.session_state.started:
         line-height: 1.5;
         font-weight: 500;
     }
-
     .stButton > button {
         font-size: 20px !important;
         font-weight: bold !important;
@@ -103,7 +97,6 @@ if not st.session_state.started:
         transition: all 0.3s ease !important;
         margin: 15px auto !important;
     }
-
     .btn-normal > button {
         background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #64748b 100%) !important;
         color: #0f172a !important;
@@ -115,7 +108,6 @@ if not st.session_state.started:
         background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%) !important;
         color: #000000 !important;
     }
-
     .btn-blind > button {
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%) !important;
         color: #020617 !important;
@@ -127,7 +119,6 @@ if not st.session_state.started:
         background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%) !important;
         color: #0f172a !important;
     }
-
     .clean-section {
         max-width: 750px;
         margin: 30px auto;
@@ -156,10 +147,8 @@ if not st.session_state.started:
   )
 
   header_col1, header_col2, header_col3 = st.columns([2, 2, 2])
-
   with header_col1:
     st.image(logo_file, width=65)
-
   with header_col2:
     st.markdown(
         """
@@ -174,7 +163,6 @@ if not st.session_state.started:
         ["العربية", "English", "Русский", "Français", "Deutsch"],
         label_visibility="collapsed",
     )
-
   with header_col3:
     st.markdown(
         """
@@ -212,79 +200,6 @@ if not st.session_state.started:
         " البصرية ومنحنيات الإضاءة إلى إشارات صوتية مساعدة، لتمكين المكفوفين وضعاف"
         " البصر من استكشاف تفاصيل القمر وبياناته بكل سهولة."
     )
-  elif lang == "Русский":
-    subtitle = (
-        "Приготовьтесь исследовать Луну, ее детали и ресурсы<br>Создано командой"
-        " Nebulous Drift"
-    )
-    btn_normal = "Начать исследование"
-    btn_blind = "Для слабовидящих"
-    card_title = "Что такое приложение Nebulous Vision?"
-    card_text1 = (
-        "• <b>Основная цель:</b> Передовое приложение, помогающее исследователям,"
-        " любителям и будущим лунным миссиям исследовать Луну и ее ресурсы."
-    )
-    card_text2 = (
-        "• <b>Команда:</b> Разработано командой <b>Nebulous Drift</b> для хакатона"
-        " NASA Space Apps Challenge."
-    )
-    card_text3 = (
-        "• <b>Поддержка:</b> Если у вас возникли вопросы или проблемы, свяжитесь"
-        " с нами."
-    )
-    blind_title = "Раздел доступности (Аудио-исследование)"
-    blind_desc = (
-        "Этот раздел предоставляет полный интерфейс голосового доступа и"
-        " звукового сопровождения данных для слабовидящих."
-    )
-  elif lang == "Français":
-    subtitle = (
-        "Préparez-vous à explorer la Lune, ses détails et ses ressources<br>Créé"
-        " par l'équipe Nebulous Drift"
-    )
-    btn_normal = "Commencer l'exploration"
-    btn_blind = "Mode accessibilité"
-    card_title = "Qu'est-ce que Nebulous Vision ?"
-    card_text1 = (
-        "• <b>Objectif :</b> Une application avancée pour explorer la Lune et"
-        " ses ressources."
-    )
-    card_text2 = (
-        "• <b>Équipe :</b> Créé par l'équipe <b>Nebulous Drift</b> pour le NASA"
-        " Space Apps Challenge."
-    )
-    card_text3 = (
-        "• <b>Support :</b> Contactez-nous en cas de problème technique."
-    )
-    blind_title = "Section Accessibilité (Exploration Vocale)"
-    blind_desc = (
-        "Cette section offre un accès audio et vocal pour les utilisateurs"
-        " malvoyants."
-    )
-  elif lang == "Deutsch":
-    subtitle = (
-        "Bereiten Sie sich darauf vor, den Mond zu erkunden<br>Erstellt vom"
-        " Nebulous Drift Team"
-    )
-    btn_normal = "Erkundung starten"
-    btn_blind = "Barrierefreiheit"
-    card_title = "Was ist Nebulous Vision?"
-    card_text1 = (
-        "• <b>Ziel:</b> Eine fortschrittliche App zur Erkundung des Mondes und"
-        " seiner Ressourcen."
-    )
-    card_text2 = (
-        "• <b>Team:</b> Entwickelt vom <b>Nebulous Drift</b> Team für die NASA"
-        " Space Apps Challenge."
-    )
-    card_text3 = (
-        "• <b>Support:</b> Bei Fragen oder Problemen kontaktieren Sie uns."
-    )
-    blind_title = "Barrierefreiheit (Audio-Erkundung)"
-    blind_desc = (
-        "Dieser Bereich bietet Sprach- und Audiounterstützung für"
-        " Sehbehinderte."
-    )
   else:
     subtitle = (
         "Get ready to explore the Moon, its details, and resources<br>Created"
@@ -304,7 +219,7 @@ if not st.session_state.started:
     card_text3 = (
         "• <b>Support:</b> Contact us if you encounter any technical issues."
     )
-    blind_title = "Accessibility Section (Audio Exploration)"
+    blind_title = "Accessibility Section"
     blind_desc = (
         "Provides full voice and audio assistance for visually impaired users."
     )
@@ -321,7 +236,6 @@ if not st.session_state.started:
   )
 
   col1, col2, col3 = st.columns([1, 2, 1])
-
   with col2:
     st.markdown('<div class="btn-normal">', unsafe_allow_html=True)
     if st.button(btn_normal, key="normal_btn"):
@@ -356,7 +270,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: شاشة القمر 3D الواقعي من أرشيف ناسا
+# الحالة الثانية: قمر ناسا الحقيقي 3D بدون تشوه
 # ==========================================
 else:
   st.markdown(
@@ -396,14 +310,14 @@ else:
   st.markdown(
       """
     <div class="title-area">
-        <h1 class="main-title-3d">Nebulous Vision: NASA 3D Lunar Topography</h1>
-        <p class="sub-instruction">استخدم الماوس لتدوير قمر ناسا الواقعي، وعجلة الماوس (Scroll) للتكبير ورؤية الفوهات والتضاريس ثلاثية الأبعاد بدقة فائقة</p>
+        <h1 class="main-title-3d">Nebulous Vision: NASA 3D Lunar Archive</h1>
+        <p class="sub-instruction">استخدم الماوس لتدوير قمر ناسا الحقيقي، وعجلة الماوس (Scroll) للتكبير برؤية فائقة الوضوح من أرشيف وكالة ناسا</p>
     </div>
     """,
       unsafe_allow_html=True,
   )
 
-  # كود القمر ثلاثي الأبعاد الواقعي جداً (بأرشيف ناسا وخريطة تضاريس حقيقية)
+  # كود القمر 3D المحسن بالكامل بدون أي تشوه أو قطع
   moon_3d_html = """
     <!DOCTYPE html>
     <html>
@@ -418,50 +332,47 @@ else:
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script>
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
             document.body.appendChild(renderer.domElement);
 
             const controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minDistance = 1.3;
-            controls.maxDistance = 8;
+            controls.minDistance = 1.5;
+            controls.maxDistance = 7;
 
-            // هندسة كروية عالية الدقة لتفاصيل الفوهات
+            // هندسة كروية مثالية بدون أي تشوهات أو مسطحات
             const geometry = new THREE.SphereGeometry(1, 128, 128);
             const textureLoader = new THREE.TextureLoader();
             
-            // تحميل نسيج عالي الدقة وتضاريس حقيقية من أرشيف ناسا للقمر
+            // تحميل نسيج عالي الدقة موثق من أرشيف ناسا
             const moonTexture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
-            const moonBump = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg'); // لخلق عمق وبروز الفوهات والتضاريس
             
             const material = new THREE.MeshStandardMaterial({
                 map: moonTexture,
-                bumpMap: moonBump,
-                bumpScale: 0.04, // تعيين عمق ثلاثي الأبعاد للفوهات
-                roughness: 0.85,
+                roughness: 0.9,
                 metalness: 0.05
             });
             
             const moon = new THREE.Mesh(geometry, material);
             scene.add(moon);
 
-            // إضاءة فضاء واقعية لتبرز تضاريس وجوانب القمر
-            const ambientLight = new THREE.AmbientLight(0x333333);
+            // إضاءة شمسية واقعية جداً تبرز التضاريس والفوهات بشكل صحيح
+            const ambientLight = new THREE.AmbientLight(0x444444);
             scene.add(ambientLight);
 
-            const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
-            sunLight.position.set(6, 3, 5);
+            const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
+            sunLight.position.set(5, 3, 4);
             scene.add(sunLight);
 
-            camera.position.z = 2.7;
+            camera.position.z = 2.8;
 
-            // حركة دوران خفيفة تلقائية مع التحكم بالماوس
             function animate() {
                 requestAnimationFrame(animate);
-                moon.rotation.y += 0.0005; // دوران بطيء وواقعي حول المحور
+                moon.rotation.y += 0.0008; // دوران هادئ وواقعي
                 controls.update();
                 renderer.render(scene, camera);
             }
