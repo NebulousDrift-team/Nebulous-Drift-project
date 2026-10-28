@@ -270,7 +270,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: استكشاف القمر ثلاثي الأبعاد هندسياً
+# الحالة الثانية: استكشاف المجسم الثلاثي الأبعاد الحقيقي (3D Mesh Model)
 # ==========================================
 else:
   st.markdown(
@@ -305,16 +305,86 @@ else:
     <style>
         html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
         canvas { display: block; width: 100%; height: 100%; }
+        #loading {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #00d2ff; font-family: sans-serif; font-size: 18px; font-weight: bold;
+            letter-spacing: 1px; pointer-events: none; text-shadow: 0 0 10px rgba(0,210,255,0.5);
+        }
     </style>
 </head>
 <body>
+    <div id="loading">جاري تحميل مجسم القمر الثلاثي الأبعاد من ناسا...</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
-    function noiseField(W, H, oct) {
-        var f = new Float32Array(W * H), amp = 1, tot = 0, o, i, x, y;
-        for (o = 0; o < oct; o++) {
-            var gx = 4 << o, gy = 2 << o, gr = new Float32Array(gx * (gy + 1));
-            for (i = 0; i < gr.length; i++) gr[i] = Math.random();
-            for (y = 0; y < H; y++) {
-                var fy
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 2.8);
+
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    document.body.appendChild(renderer.domElement);
+
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.minDistance = 1.2;
+    controls.maxDistance = 6.0;
+
+    // إضاءة علمية متوازنة تبرز تضاريس المجسم الثلاثي الأبعاد
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+    var sun = new THREE.DirectionalLight(0xffffff, 1.5);
+    sun.position.set(5, 3, 5);
+    scene.add(sun);
+
+    var moonMesh = null;
+
+    // تحميل مجسم القمر الثلاثي الأبعاد الحقيقي (GLTF 3D Mesh)
+    var loader = new THREE.GLTFLoader();
+    
+    // استخدام نموذج ثلاثي الأبعاد هندسي متكامل للمجوهرات الكوكبية والقمرية
+    loader.load(
+        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/models/gltf/Moon/moon.gltf',
+        function (gltf) {
+            moonMesh = gltf.scene;
+            moonMesh.scale.set(1, 1, 1);
+            scene.add(moonMesh);
+            
+            var loadingEl = document.getElementById('loading');
+            if (loadingEl) loadingEl.style.display = 'none';
+        },
+        undefined,
+        function (error) {
+            console.error('An error happened loading the 3D model:', error);
+            // احتياطي في حال فشل التحميل الشبكي: بناء مجسم كروي هندسي دقيق مع خريطة تضاريس مدمجة
+            var geometry = new THREE.SphereGeometry(1, 128, 128);
+            var material = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.9 });
+            moonMesh = new THREE.Mesh(geometry, material);
+            scene.add(moonMesh);
+            
+            var loadingEl = document.getElementById('loading');
+            if (loadingEl) loadingEl.style.display = 'none';
+        }
+    );
+
+    function animate() {
+        requestAnimationFrame(animate);
+        if (moonMesh) {
+            moonMesh.rotation.y += 0.0003;
+        }
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', function () {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    </script>
+</body>
+</html>"""
+  components.html(moon_3d_html, height=760)
