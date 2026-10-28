@@ -136,4 +136,185 @@ if not st.session_state.started:
         letter-spacing: 0.5px;
     }
     .clean-section p {
-        color: #94a3
+        color: #94a3b8;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 10px;
+    }
+    </style>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  header_col1, header_col2, header_col3 = st.columns([2, 2, 2])
+  with header_col1:
+    st.image(logo_file, width=65)
+  with header_col2:
+    st.markdown(
+        """
+        <div style="text-align: center; padding-top: 5px;">
+            <span style="color: #cbd5e1; font-weight: bold; font-size: 14px;">🌐 اللغات / Languages</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    lang = st.selectbox(
+        "",
+        ["العربية", "English", "Русский", "Français", "Deutsch"],
+        label_visibility="collapsed",
+    )
+  with header_col3:
+    st.markdown(
+        """
+        <div style="text-align: left;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg" class="nasa-logo" alt="NASA Logo">
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  if lang == "العربية":
+    subtitle = (
+        "استعد لاكتشاف القمر وتفاصيله وموارده<br>من إنشاء فريق انحراف سديمي"
+    )
+    btn_normal = "أبدأ الاستكشاف"
+    btn_blind = "قسم المكفوفين (الاستكشاف الصوتي)"
+    card_title = "ما هو تطبيق نيبلوز فيشون؟"
+    card_text1 = (
+        "• <b>الهدف الرئيسي:</b> تطبيق متطور لمساعدة الباحثين والهواة والرحلات"
+        " المستقبلية على اكتشاف القمر، دراسة تفاصيله السطحية، وتحليل موارده بدقة"
+        " عالية."
+    )
+    card_text2 = (
+        "• <b>فريق العمل:</b> تم تطوير هذا المشروع الإبداعي بواسطة فريق"
+        " <b>انحراف سديمي (Nebulous Drift S/W Analytics Grp)</b> خصيصاً للمشاركة"
+        " في مسابقة ناسا العالمية (NASA Space Apps Challenge)."
+    )
+    card_text3 = (
+        "• <b>التواصل والدعم:</b> نعمل باستمرار على تقديم تجربة استثنائية؛ لو"
+        " واجهتكم أي مشاكل تقنية أو استفسارات، يسعدنا تواصلكم معنا."
+    )
+    blind_title = "شرح قسم المكفوفين (الاستكشاف الصوتي)"
+    blind_desc = (
+        "يوفر هذا القسم واجهة وصول كاملة مجهزة بالاستكشاف الصوتي، وتحويل البيانات"
+        " البصرية ومنحنيات الإضاءة إلى إشارات صوتية مساعدة، لتمكين المكفوفين وضعاف"
+        " البصر من استكشاف تفاصيل القمر وبياناته بكل سهولة."
+    )
+  else:
+    subtitle = (
+        "Get ready to explore the Moon, its details, and resources<br>Created"
+        " by Nebulous Drift Team"
+    )
+    btn_normal = "Start Exploration"
+    btn_blind = "Accessibility Mode"
+    card_title = "What is Nebulous Vision?"
+    card_text1 = (
+        "• <b>Main Goal:</b> An advanced application to help researchers, hobbyists,"
+        " and lunar missions explore the Moon and its resources."
+    )
+    card_text2 = (
+        "• <b>Team:</b> Developed by the <b>Nebulous Drift</b> team for the NASA"
+        " Space Apps Challenge."
+    )
+    card_text3 = (
+        "• <b>Support:</b> Contact us if you encounter any technical issues."
+    )
+    blind_title = "Accessibility Section"
+    blind_desc = (
+        "Provides full voice and audio assistance for visually impaired users."
+    )
+
+  st.markdown(
+      f"""
+    <div class="hero-wrapper">
+        <div class="moon-huge"></div>
+        <h1 class="main-title">Nebulous Vision</h1>
+        <p class="sub-title">{subtitle}</p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  col1, col2, col3 = st.columns([1, 2, 1])
+  with col2:
+    st.markdown('<div class="btn-normal">', unsafe_allow_html=True)
+    if st.button(btn_normal, key="normal_btn"):
+      st.session_state.started = True
+      st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
+
+  st.markdown(
+      f"""
+    <div class="clean-section">
+        <h3>{card_title}</h3>
+        <p>{card_text1}</p>
+        <p>{card_text2}</p>
+        <p>{card_text3}</p>
+    </div>
+    <div class="clean-section">
+        <h3>{blind_title}</h3>
+        <p>{blind_desc}</p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  with col2:
+    st.markdown('<div class="btn-blind">', unsafe_allow_html=True)
+    if st.button(btn_blind, key="blind_btn"):
+      st.info(
+          "جاري تفعيل واجهة الاستكشاف الصوتي وقراءة البيانات للمكفوفين..."
+      )
+    st.markdown("</div>", unsafe_allow_html=True)
+
+  st.write("<br><br>", unsafe_allow_html=True)
+
+# ==========================================
+# الحالة الثانية: استكشاف القمر ثلاثي الأبعاد هندسياً
+# ==========================================
+else:
+  st.markdown(
+      """
+    <style>
+    .stApp {
+        background-color: #000000;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+    .top-controls {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 999;
+    }
+    </style>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  st.markdown('<div class="top-controls">', unsafe_allow_html=True)
+  if st.button("⬅ العودة للواجهة الرئيسية"):
+    st.session_state.started = False
+    st.rerun()
+  st.markdown("</div>", unsafe_allow_html=True)
+
+  moon_3d_html = """<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+        canvas { display: block; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+    function noiseField(W, H, oct) {
+        var f = new Float32Array(W * H), amp = 1, tot = 0, o, i, x, y;
+        for (o = 0; o < oct; o++) {
+            var gx = 4 << o, gy = 2 << o, gr = new Float32Array(gx * (gy + 1));
+            for (i = 0; i < gr.length; i++) gr[i] = Math.random();
+            for (y = 0; y < H; y++) {
+                var fy
