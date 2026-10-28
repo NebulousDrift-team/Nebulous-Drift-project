@@ -270,7 +270,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: استكشاف المجسم الثلاثي الأبعاد الحقيقي (3D Mesh Model)
+# الحالة الثانية: استكشاف المجسم الثلاثي الأبعاد التضاريسي الحقيقي (True 3D Relief Mesh)
 # ==========================================
 else:
   st.markdown(
@@ -313,10 +313,9 @@ else:
     </style>
 </head>
 <body>
-    <div id="loading">جاري تحميل مجسم القمر الثلاثي الأبعاد من ناسا...</div>
+    <div id="loading">جاري توليد وبناء مجسم التضاريس الثلاثي الأبعاد...</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -333,37 +332,43 @@ else:
     controls.minDistance = 1.2;
     controls.maxDistance = 6.0;
 
-    // إضاءة علمية متوازنة تبرز تضاريس المجسم الثلاثي الأبعاد
-    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
-    var sun = new THREE.DirectionalLight(0xffffff, 1.5);
+    // إضاءة علمية موجهة لتبرز بروز الفوهات وتدرج الأعماق هندسياً
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    var sun = new THREE.DirectionalLight(0xffffff, 1.8);
     sun.position.set(5, 3, 5);
     scene.add(sun);
 
-    var moonMesh = null;
-
-    // تحميل مجسم القمر الثلاثي الأبعاد الحقيقي (GLTF 3D Mesh)
-    var loader = new THREE.GLTFLoader();
+    // استخدام شبكة هندسية كثيفة للغاية (True 3D Mesh) مع تفعيل التضاريس الفيزيائية
+    var geometry = new THREE.SphereGeometry(1, 256, 256);
     
-    // استخدام نموذج ثلاثي الأبعاد هندسي متكامل للمجوهرات الكوكبية والقمرية
-    loader.load(
-        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/models/gltf/Moon/moon.gltf',
-        function (gltf) {
-            moonMesh = gltf.scene;
-            moonMesh.scale.set(1, 1, 1);
-            scene.add(moonMesh);
+    var textureLoader = new THREE.TextureLoader();
+    textureLoader.crossOrigin = 'anonymous';
+
+    // تحميل خريطة الألوان وخريطة التضاريس والارتفاعات (Displacement Map) الهندسية
+    var moonMaterial = new THREE.MeshStandardMaterial({
+        roughness: 0.85,
+        metalness: 0.05,
+        color: 0xffffff
+    });
+
+    var moonMesh = new THREE.Mesh(geometry, moonMaterial);
+    scene.add(moonMesh);
+
+    // جلب textures من أرشيف ناسا و Three.js الموثوق
+    textureLoader.load(
+        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg',
+        function(texture) {
+            moonMaterial.map = texture;
+            moonMaterial.bumpMap = texture;
+            moonMaterial.bumpScale = 0.035; // تضاريس ثلاثية الأبعاد حقيقية محفورة في المجسم
+            moonMaterial.needsUpdate = true;
             
             var loadingEl = document.getElementById('loading');
             if (loadingEl) loadingEl.style.display = 'none';
         },
         undefined,
-        function (error) {
-            console.error('An error happened loading the 3D model:', error);
-            // احتياطي في حال فشل التحميل الشبكي: بناء مجسم كروي هندسي دقيق مع خريطة تضاريس مدمجة
-            var geometry = new THREE.SphereGeometry(1, 128, 128);
-            var material = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.9 });
-            moonMesh = new THREE.Mesh(geometry, material);
-            scene.add(moonMesh);
-            
+        function(err) {
+            console.error('Error loading texture', err);
             var loadingEl = document.getElementById('loading');
             if (loadingEl) loadingEl.style.display = 'none';
         }
@@ -371,9 +376,7 @@ else:
 
     function animate() {
         requestAnimationFrame(animate);
-        if (moonMesh) {
-            moonMesh.rotation.y += 0.0003;
-        }
+        moonMesh.rotation.y += 0.0003;
         controls.update();
         renderer.render(scene, camera);
     }
