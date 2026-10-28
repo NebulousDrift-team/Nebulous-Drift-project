@@ -270,7 +270,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: مجسم قمر ناسا الفلكي الكامل 3D بملء الشاشة
+# الحالة الثانية: قمر ناسا ثلاثي الأبعاد الواقعي الحقيقي بدون توهج مفرط
 # ==========================================
 else:
   st.markdown(
@@ -321,12 +321,12 @@ else:
             const controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minDistance = 1.8;
+            controls.minDistance = 1.6;
             controls.maxDistance = 7.0;
 
-            // 1. نجوم فضاء خلفية دائرية ناعمة وبرّاقة
+            // 1. خلفية نجوم ناعمة جداً
             const starsGeometry = new THREE.BufferGeometry();
-            const starsCount = 2500;
+            const starsCount = 1800;
             const starPositions = new Float32Array(starsCount * 3);
             for(let i = 0; i < starsCount * 3; i++) {
                 starPositions[i] = (Math.random() - 0.5) * 500;
@@ -338,46 +338,51 @@ else:
             canvas.height = 16;
             const ctx = canvas.getContext('2d');
             ctx.beginPath();
-            ctx.arc(8, 8, 6, 0, Math.PI * 2);
+            ctx.arc(8, 8, 5, 0, Math.PI * 2);
             ctx.fillStyle = '#ffffff';
             ctx.fill();
             const starTexture = new THREE.CanvasTexture(canvas);
 
             const starsMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
-                size: 1.2,
+                size: 1.1,
                 map: starTexture,
                 transparent: true,
-                opacity: 0.85,
+                opacity: 0.7,
                 blending: THREE.AdditiveBlending
             });
             const starField = new THREE.Points(starsGeometry, starsMaterial);
             scene.add(starField);
 
-            // 2. هندسة كرة القمر الحقيقية مع خريطة أرشيف ناسا الكروية الصحيحة 100%
-            const geometry = new THREE.SphereGeometry(1, 256, 256);
+            // 2. تطبيق إسقاط UV متوازن للكرة لمنع انكماش وتشويه القطبين (Polar Fix)
+            const geometry = new THREE.SphereGeometry(1, 128, 128);
             const textureLoader = new THREE.TextureLoader();
             textureLoader.crossOrigin = 'anonymous';
             
-            // استخدام خريطة الأرشيف الكروية المعتمدة لضمان تطابق القطبين والفوهات
-            const moonTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg');
+            // خريطة ناسا عالية الدقة والمخصصة للكرة الكوكبية
+            const moonTexture = textureLoader.load('https://raw.githubusercontent.com/stem-apps/3d-assets/main/moon_map.jpg');
             
             const material = new THREE.MeshStandardMaterial({
                 map: moonTexture,
-                roughness: 0.85,
-                metalness: 0.05
+                roughness: 0.95,
+                metalness: 0.0,
+                wireframe: false
             });
             
             const moon = new THREE.Mesh(geometry, material);
             scene.add(moon);
 
-            // 3. إضاءة علمية متوازنة تظهر كل تفاصيل القمر كاملة من جميع الجهات دون أي قص أو حجب
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
+            // 3. ضبط السطوع والإضاءة لتقليل التوهج الأبيض وإظهار تفاصيل الفوهات بدقة
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // إضاءة هادئة
             scene.add(ambientLight);
+
+            const sunLight = new THREE.DirectionalLight(0xffffff, 1.2); // إضاءة شمسية متوازنة
+            sunLight.position.set(5, 3, 5);
+            scene.add(sunLight);
 
             camera.position.z = 2.8;
 
-            // 4. حركة دوران هادئة وواقعية
+            // 4. حلقة التحديث والرندر
             function animate() {
                 requestAnimationFrame(animate);
                 moon.rotation.y += 0.0003;
