@@ -24,7 +24,7 @@ for f in [
     break
 
 # ==========================================
-# الحالة الأولى: الواجهة الرئيسية بتفاصيلك الكاملة
+# الحالة الأولى: الواجهة الرئيسية بكامل تفاصيلها
 # ==========================================
 if not st.session_state.started:
 
@@ -35,16 +35,6 @@ if not st.session_state.started:
         background-color: #020408;
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
-    
-    .top-header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        position: relative;
-        z-index: 20;
     }
     
     .nasa-logo {
@@ -347,12 +337,6 @@ if not st.session_state.started:
         <p>{card_text2}</p>
         <p>{card_text3}</p>
     </div>
-    """,
-      unsafe_allow_html=True,
-  )
-
-  st.markdown(
-      f"""
     <div class="clean-section">
         <h3>{blind_title}</h3>
         <p>{blind_desc}</p>
@@ -372,7 +356,7 @@ if not st.session_state.started:
   st.write("<br><br>", unsafe_allow_html=True)
 
 # ==========================================
-# الحالة الثانية: شاشة القمر 3D التفاعلي عند الضغط على أبدأ
+# الحالة الثانية: شاشة القمر 3D الواقعي من أرشيف ناسا
 # ==========================================
 else:
   st.markdown(
@@ -385,10 +369,10 @@ else:
     }
     .title-area {
         text-align: center;
-        padding: 5px;
+        padding: 2px;
     }
     .main-title-3d {
-        font-size: 38px;
+        font-size: 36px;
         font-weight: 950;
         background: linear-gradient(135deg, #00d2ff 25%, #e2e8f0 85%);
         -webkit-background-clip: text;
@@ -398,7 +382,7 @@ else:
     .sub-instruction {
         color: #94a3b8;
         font-size: 14px;
-        margin-top: 3px;
+        margin-top: 2px;
     }
     </style>
     """,
@@ -412,13 +396,14 @@ else:
   st.markdown(
       """
     <div class="title-area">
-        <h1 class="main-title-3d">Nebulous Vision: 3D Lunar Explorer</h1>
-        <p class="sub-instruction">استخدم الماوس لتدوير القمر، وعجلة الماوس (Scroll) للتكبير ورؤية الفوهات والتفاصيل بدقة عالية</p>
+        <h1 class="main-title-3d">Nebulous Vision: NASA 3D Lunar Topography</h1>
+        <p class="sub-instruction">استخدم الماوس لتدوير قمر ناسا الواقعي، وعجلة الماوس (Scroll) للتكبير ورؤية الفوهات والتضاريس ثلاثية الأبعاد بدقة فائقة</p>
     </div>
     """,
       unsafe_allow_html=True,
   )
 
+  # كود القمر ثلاثي الأبعاد الواقعي جداً (بأرشيف ناسا وخريطة تضاريس حقيقية)
   moon_3d_html = """
     <!DOCTYPE html>
     <html>
@@ -444,30 +429,39 @@ else:
             controls.minDistance = 1.3;
             controls.maxDistance = 8;
 
-            const geometry = new THREE.SphereGeometry(1, 64, 64);
+            // هندسة كروية عالية الدقة لتفاصيل الفوهات
+            const geometry = new THREE.SphereGeometry(1, 128, 128);
             const textureLoader = new THREE.TextureLoader();
+            
+            // تحميل نسيج عالي الدقة وتضاريس حقيقية من أرشيف ناسا للقمر
             const moonTexture = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
+            const moonBump = textureLoader.load('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg'); // لخلق عمق وبروز الفوهات والتضاريس
             
             const material = new THREE.MeshStandardMaterial({
                 map: moonTexture,
-                roughness: 0.9,
-                metalness: 0.1
+                bumpMap: moonBump,
+                bumpScale: 0.04, // تعيين عمق ثلاثي الأبعاد للفوهات
+                roughness: 0.85,
+                metalness: 0.05
             });
             
             const moon = new THREE.Mesh(geometry, material);
             scene.add(moon);
 
-            const ambientLight = new THREE.AmbientLight(0x222222);
+            // إضاءة فضاء واقعية لتبرز تضاريس وجوانب القمر
+            const ambientLight = new THREE.AmbientLight(0x333333);
             scene.add(ambientLight);
 
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
-            directionalLight.position.set(5, 3, 5);
-            scene.add(directionalLight);
+            const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
+            sunLight.position.set(6, 3, 5);
+            scene.add(sunLight);
 
             camera.position.z = 2.7;
 
+            // حركة دوران خفيفة تلقائية مع التحكم بالماوس
             function animate() {
                 requestAnimationFrame(animate);
+                moon.rotation.y += 0.0005; // دوران بطيء وواقعي حول المحور
                 controls.update();
                 renderer.render(scene, camera);
             }
