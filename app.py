@@ -197,7 +197,7 @@ else:
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
-    /* تنسيق أزرار التصنيفات العلوية لكي تكون واضحة ومقروءة دائماً */
+    /* تنسيق أزرار التصنيفات العلوية لكي تكون واضحة ومقروءة تماماً */
     .stButton button {
         background-color: #0f172a !important;
         color: #ffffff !important;
@@ -289,7 +289,7 @@ else:
       unsafe_allow_html=True,
   )
 
-  # قاعدة بيانات ديناميكية مرتبطة بصور حقيقية لكل فوهة/منطقة
+  # قاعدة بيانات ديناميكية بصور حقيقية مستقلة لكل فوهة وإحداثيات نقاط تركيز فريدة
   data_sources = {
       "اماكن المياه": [
           {
@@ -302,7 +302,9 @@ else:
               "status": "تركيز عالي جداً للمورد",
               "type": "high",
               "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Shackleton_crater_mosaic.jpg/640px-Shackleton_crater_mosaic.jpg",
-              "color": "rgba(0, 210, 255, 0.6)",
+              "color": "rgba(0, 210, 255, 0.7)",
+              "p1": "top: 45%; left: 50%;",
+              "p2": "top: 65%; left: 40%;",
           },
           {
               "name": "فوهة فاوستيني (Faustini Crater)",
@@ -312,8 +314,10 @@ else:
               ),
               "status": "موقع مرشح بقوة",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(0, 150, 255, 0.5)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/320px-FullMoon2010.jpg",
+              "color": "rgba(0, 150, 255, 0.6)",
+              "p1": "top: 30%; left: 60%;",
+              "p2": "top: 55%; left: 50%;",
           },
       ],
       "الجليد": [
@@ -326,8 +330,10 @@ else:
               ),
               "status": "جليد قطبي دائم",
               "type": "high",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(180, 220, 255, 0.7)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/LCROSS_impact_site_cabeus.jpg/640px-LCROSS_impact_site_cabeus.jpg",
+              "color": "rgba(180, 220, 255, 0.8)",
+              "p1": "top: 25%; left: 35%;",
+              "p2": "top: 70%; left: 55%;",
           },
           {
               "name": "فوهة كابيوس (Cabeus Crater)",
@@ -338,8 +344,10 @@ else:
               ),
               "status": "مؤكد علمياً من ناسا",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(150, 200, 255, 0.6)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/320px-FullMoon2010.jpg",
+              "color": "rgba(150, 200, 255, 0.7)",
+              "p1": "top: 50%; left: 45%;",
+              "p2": "top: 40%; left: 65%;",
           },
       ],
       "درجات الحرارة": [
@@ -352,8 +360,10 @@ else:
               ),
               "status": "برودة فائقة (ظل دائم)",
               "type": "high",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(0, 100, 255, 0.7)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Shackleton_crater_mosaic.jpg/640px-Shackleton_crater_mosaic.jpg",
+              "color": "rgba(0, 100, 255, 0.8)",
+              "p1": "top: 60%; left: 30%;",
+              "p2": "top: 20%; left: 50%;",
           },
           {
               "name": "مرتفعات القطب الجنوبي (Peak of Eternal Light)",
@@ -364,8 +374,10 @@ else:
               ),
               "status": "مناسب لتوليد الطاقة",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(255, 140, 0, 0.7)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/320px-FullMoon2010.jpg",
+              "color": "rgba(255, 140, 0, 0.8)",
+              "p1": "top: 40%; left: 40%;",
+              "p2": "top: 50%; left: 60%;",
           },
       ],
       "الاماكن المضيئه": [
@@ -378,8 +390,10 @@ else:
               ),
               "status": "إضاءة شمسية شبه دائمة",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(255, 230, 0, 0.7)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/320px-FullMoon2010.jpg",
+              "color": "rgba(255, 230, 0, 0.8)",
+              "p1": "top: 35%; left: 50%;",
+              "p2": "top: 55%; left: 55%;",
           },
       ],
       "الاماكن المظلمه": [
@@ -392,8 +406,10 @@ else:
               ),
               "status": "ظلام دائم - حظر شمسي",
               "type": "high",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(80, 80, 120, 0.8)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Shackleton_crater_mosaic.jpg/640px-Shackleton_crater_mosaic.jpg",
+              "color": "rgba(80, 80, 120, 0.9)",
+              "p1": "top: 50%; left: 50%;",
+              "p2": "top: 60%; left: 60%;",
           },
       ],
       "المواد الطيف الضوئي": [
@@ -406,8 +422,10 @@ else:
               ),
               "status": "تنوع معدني وطيفي فريد",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(160, 32, 240, 0.6)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/South_Pole-Aitken_basin_topography.jpg/640px-South_Pole-Aitken_basin_topography.jpg",
+              "color": "rgba(160, 32, 240, 0.7)",
+              "p1": "top: 45%; left: 45%;",
+              "p2": "top: 30%; left: 55%;",
           },
       ],
       "الصلابه": [
@@ -420,8 +438,10 @@ else:
               ),
               "status": "صلابة عالية واستقرار تربة",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(46, 204, 113, 0.6)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/320px-FullMoon2010.jpg",
+              "color": "rgba(46, 204, 113, 0.7)",
+              "p1": "top: 55%; left: 40%;",
+              "p2": "top: 45%; left: 60%;",
           },
       ],
       "المعادن": [
@@ -434,8 +454,10 @@ else:
               ),
               "status": "احتياطي معدني مكتشف",
               "type": "high",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(231, 76, 60, 0.7)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Copernicus_crater_from_Lunar_Orbiter_5.jpg/640px-Copernicus_crater_from_Lunar_Orbiter_5.jpg",
+              "color": "rgba(231, 76, 60, 0.8)",
+              "p1": "top: 40%; left: 48%;",
+              "p2": "top: 60%; left: 52%;",
           },
       ],
       "توقعات الإشعاع الشمسي": [
@@ -448,8 +470,10 @@ else:
               ),
               "status": "مستوى إحصائي آمن للمهام",
               "type": "safe",
-              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(241, 196, 15, 0.7)",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/320px-FullMoon2010.jpg",
+              "color": "rgba(241, 196, 15, 0.8)",
+              "p1": "top: 30%; left: 40%;",
+              "p2": "top: 65%; left: 55%;",
           },
       ],
       "وضع القمر": [
@@ -463,7 +487,9 @@ else:
               "status": "اتصال مباشر ومستقر",
               "type": "safe",
               "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
-              "color": "rgba(52, 152, 219, 0.6)",
+              "color": "rgba(52, 152, 219, 0.7)",
+              "p1": "top: 50%; left: 50%;",
+              "p2": "top: 35%; left: 45%;",
           },
       ],
   }
@@ -490,20 +516,20 @@ else:
       )
 
   with col_img:
-    # عرض صورة الفوهة المخصصة مع طبقة شفافة وملونة تعبر عن التركيز حسب التصنيف
+    # عرض صورة الفوهة المخصصة لكل كارت مع نقاط شفافة وملونة تتغير إحداثياتها وألوانها حسب التصنيف
     for crater in current_craters:
       st.markdown(
           f"""
             <div class="crater-card" style="text-align: center; position: relative;">
                 <p style="color: #00d2ff; font-weight: bold; margin-bottom: 5px;">{crater['name']}</p>
                 <div style="position: relative; display: inline-block; width: 100%;">
-                    <img src="{crater['img']}" style="width: 100%; border-radius: 10px; opacity: 0.9; border: 1px solid #00d2ff;">
-                    <!-- نقاط شفافة وملونة تتناسب مع التصنيف المختار لتوضيح بؤر التركيز -->
-                    <div style="position: absolute; top: 35%; left: 45%; width: 25px; height: 25px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 15px {crater['color']}; animation: pulse 1.5s infinite;"></div>
-                    <div style="position: absolute; top: 60%; left: 60%; width: 18px; height: 18px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 12px {crater['color']};"></div>
-                    <div style="position: absolute; top: 25%; left: 30%; width: 15px; height: 15px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 10px {crater['color']};"></div>
+                    <img src="{crater['img']}" style="width: 100%; border-radius: 10px; opacity: 0.95; border: 1px solid #00d2ff;">
+                    <!-- نقطة التركيز الأولى بإحداثيات فريدة لكل فوهة ولون ديناميكي حسب التصنيف -->
+                    <div style="position: absolute; {crater['p1']} width: 22px; height: 22px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 15px {crater['color']};"></div>
+                    <!-- نقطة التركيز الثانية في مكان مختلف داخل نفس الفوهة -->
+                    <div style="position: absolute; {crater['p2']} width: 16px; height: 16px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 12px {crater['color']};"></div>
                 </div>
-                <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">🔵 النقاط الملونة الشفافة توضح مناطق الترکز القصوى لـ ({st.session_state.selected_category}) داخل الفوهة.</p>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">🔵 النقاط الشفافة الملونة توضح بؤر التركيز لـ ({st.session_state.selected_category}) داخل تفاصيل الفوهة.</p>
             </div>
             """,
           unsafe_allow_html=True,
