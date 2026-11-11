@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 
 # إعداد الصفحة وتوسيعها
 st.set_page_config(
-    page_title="Nebulous Vision - Lunar GIS Atlas", page_icon="🌙", layout="wide"
+    page_title="Nebulous Vision - Dynamic NASA GIS", page_icon="🌙", layout="wide"
 )
 
 # تتبع حالة التطبيق
@@ -12,7 +12,7 @@ if "started" not in st.session_state:
   st.session_state.started = False
 
 if "selected_category" not in st.session_state:
-  st.session_state.selected_category = "المياه"
+  st.session_state.selected_category = "اماكن المياه"
 
 # اكتشاف صورة الشعار تلقائياً
 logo_file = "logo.png"
@@ -178,15 +178,15 @@ if not st.session_state.started:
       """
     <div class="clean-section">
         <h3>ما هو تطبيق نيبلوز فيشون؟</h3>
-        <p>• <b>الهدف الرئيسي:</b> تطبيق متطور لمساعدة الباحثين ومخططي المهمات على استكشاف الموارد وتحليل مواقع الهبوط القمري بدقة عالية.</p>
-        <p>• <b>فريق العمل:</b> فريق <b>انحراف سديمي (Nebulous Drift)</b> للمشاركة في مسابقة ناسا العالمية.</p>
+        <p>• <b>الهدف الرئيسي:</b> نظام تحليل مكاني تفاعلي مستوحى من أرشيف ناسا لاكتشاف الموارد ومواقع الهبوط.</p>
+        <p>• <b>فريق العمل:</b> فريق <b>انحراف سديمي (Nebulous Drift)</b> لمشاركة ناسا سبيس أبس.</p>
     </div>
     """,
       unsafe_allow_html=True,
   )
 
 # ==========================================
-# الحالة الثانية: لوحة التحليل والمواقع (حسب تصميمك الرهيب)
+# الحالة الثانية: الداشبورد التفاعلي الكامل لكل الفئات
 # ==========================================
 else:
   st.markdown(
@@ -197,26 +197,9 @@ else:
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        margin-bottom: 20px;
-    }
-    .category-box {
-        background: #0f172a;
-        border: 2px solid #00d2ff;
-        border-radius: 14px;
-        padding: 12px;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.3s;
-    }
     .crater-card {
         background: #0f172a;
-        border: 1px solid rgba(0, 210, 255, 0.3);
+        border: 1px solid rgba(0, 210, 255, 0.4);
         border-radius: 16px;
         padding: 20px;
         margin-bottom: 20px;
@@ -243,7 +226,6 @@ else:
       unsafe_allow_html=True,
   )
 
-  # زر العودة والشعار
   col_back, col_title = st.columns([1, 4])
   with col_back:
     if st.button("⬅ العودة للرئيسية"):
@@ -251,97 +233,244 @@ else:
       st.rerun()
   with col_title:
     st.markdown(
-        "<h3 style='color: #00d2ff; margin:0; text-align: left;'>🌙 أطلس"
-        " الاستكشاف والموارد القطبية (NASA LRO Data)</h3>",
+        "<h3 style='color: #00d2ff; margin:0;'>🌙 أطلس ناسا العلمي للتضاريس"
+        " والموارد القمرية</h3>",
         unsafe_allow_html=True,
     )
 
   st.write("---")
 
-  # شريط التصنيفات (Categories)
-  st.markdown(
-      "<h4 style='color: #94a3b8;'>Categories</h4>", unsafe_allow_html=True
-  )
-  cat_col1, cat_col2, cat_col3, cat_col4 = st.columns(4)
-
-  with cat_col1:
-    if st.button(
-        "💧 المياه",
-        use_container_width=True,
-        key="c1",
-    ):
-      st.session_state.selected_category = "المياه"
-  with cat_col2:
-    if st.button(
-        "❄ الجليد",
-        use_container_width=True,
-        key="c2",
-    ):
-      st.session_state.selected_category = "الجليد"
-  with cat_col3:
-    if st.button(
-        "📐 المنحدرات",
-        use_container_width=True,
-        key="c3",
-    ):
-      st.session_state.selected_category = "المنحدرات"
-  with cat_col4:
-    if st.button(
-        "🌡 الحرارة",
-        use_container_width=True,
-        key="c4",
-    ):
-      st.session_state.selected_category = "درجة الحرارة"
+  # قائمة التصنيفات الشاملة (حسب رسمتك بالمللي)
+  categories = [
+      "اماكن المياه",
+      "الجليد",
+      "درجات الحرارة",
+      "الاماكن المضيئه",
+      "الاماكن المظلمه",
+      "المواد الطيف الضوئي",
+      "الصلابه",
+      "المعادن",
+      "توقعات الإشعاع الشمسي",
+      "وضع القمر",
+  ]
 
   st.markdown(
-      f"<h3 style='margin-top: 20px; color: #f8fafc;'>توصيات المواقع القطبية:"
-      f" تركيز ({st.session_state.selected_category})</h3>",
+      "<h4 style='color: #94a3b8;'>اختر التصنيف أو الظاهرة للتحليل من أرشيف"
+      " ناسا:</h4>",
       unsafe_allow_html=True,
   )
 
-  # عرض الكروت بناءً على تصميمك الرهيب
+  # عرض الأزرار في صفوف منظمة
+  cols = st.columns(5)
+  for i, cat in enumerate(categories):
+    with cols[i % 5]:
+      if st.button(
+          cat,
+          use_container_width=True,
+          key=f"cat_{i}",
+          type=(
+              "primary"
+              if st.session_state.selected_category == cat
+              else "secondary"
+          ),
+      ):
+        st.session_state.selected_category = cat
+        st.rerun()
+
+  st.write("")
+  st.markdown(
+      f"<h3 style='color: #00d2ff; margin-top: 10px;'>📊 نتائج أرشيف ناسا"
+      f" (LRO): تحليل ({st.session_state.selected_category})</h3>",
+      unsafe_allow_html=True,
+  )
+
+  # قاعدة بيانات ديناميكية تتغير فوراً حسب التصنيف المختار
+  data_sources = {
+      "اماكن المياه": [
+          {
+              "name": "فوهة ساكلتون (Shackleton Crater)",
+              "coords": "89.9° جنوباً / 129° شرقاً",
+              "report": (
+                  "رصد مسبار ناسا ترسبات هيدروجينية ومياه محتملة بنسبة تركيز"
+                  " عالية داخل الظل الدائم."
+              ),
+              "status": "تركيز عالي جداً للمورد",
+              "type": "high",
+          },
+          {
+              "name": "فوهة فاوستيني (Faustini Crater)",
+              "coords": "87.2° جنوباً / 77.0° شرقاً",
+              "report": (
+                  "تحليل طيفي يظهر مؤشرات قوية لوجود جزيئات جليد مائي في القاع."
+              ),
+              "status": "موقع مرشح بقوة",
+              "type": "safe",
+          },
+      ],
+      "الجليد": [
+          {
+              "name": "فوهة شوميتكر (Shoemaker Crater)",
+              "coords": "88.1° جنوباً / 44.9° شرقاً",
+              "report": (
+                  "تعتبر من أبرد المناطق القطبية مع تراكم طبقات جليدية سميكة"
+                  " محمية من الشمس."
+              ),
+              "status": "جليد قطبي دائم",
+              "type": "high",
+          },
+          {
+              "name": "فوهة كابيوس (Cabeus Crater)",
+              "coords": "84.9° جنوباً / 35.9° غرباً",
+              "report": (
+                  "الموقع التاريخي لاصطدام مركبة LCROSS والذي أكد وجود نسب معتبرة"
+                  " من المياه والجليد."
+              ),
+              "status": "مؤكد علمياً من ناسا",
+              "type": "safe",
+          },
+      ],
+      "درجات الحرارة": [
+          {
+              "name": "حواف فوهة هيرميتاج (Hermite Rim)",
+              "coords": "86.0° شمالاً / 326.0° شرقاً",
+              "report": (
+                  "تسجيل أدنى درجات حرارة في النظام الشمسي (-250 درجة مئوية) في"
+                  " القاع المظلم."
+              ),
+              "status": "برودة فائقة (ظل دائم)",
+              "type": "high",
+          },
+          {
+              "name": "مرتفعات القطب الجنوبي (Peak of Eternal Light)",
+              "coords": "88.5° جنوباً / 110.0° شرقاً",
+              "report": (
+                  "تتعرض لإضاءة شمسية مستمرة بنسبة تزيد عن 85%، درجات حرارة"
+                  " معتدلة ومستقرة."
+              ),
+              "status": "مناسب لتوليد الطاقة",
+              "type": "safe",
+          },
+      ],
+      "الاماكن المضيئه": [
+          {
+              "name": "قمة الأبدية الضوئية (Peak of Eternal Light)",
+              "coords": "88.5° جنوباً / 110.0° شرقاً",
+              "report": (
+                  "قمة جبلية ترتفع بشكل يمنع حجب عنها الشمس، مما يجعلها مثالية"
+                  " لمحطات الطاقة الشمسية."
+              ),
+              "status": "إضاءة شمسية شبه دائمة",
+              "type": "safe",
+          },
+      ],
+      "الاماكن المظلمه": [
+          {
+              "name": "قاع فوهة أوسكي (Amundsen Crater Floor)",
+              "coords": "84.3° جنوباً / 83.3° شرقاً",
+              "report": (
+                  "مناطق غارقة في ظلام تام منذ مليارات السنين، تحافظ على المركبات"
+                  " المتطايرة والجليد النقي."
+              ),
+              "status": "ظلام دائم - حظر شمسي",
+              "type": "high",
+          },
+      ],
+      "المواد الطيف الضوئي": [
+          {
+              "name": "حوض أيتكين (South Pole-Aitken Basin)",
+              "coords": "53.0° جنوباً / 170.0° شرقاً",
+              "report": (
+                  "تحليل الطيف الضوئي يكشف عن تواجد مواد غنية بالبيروكسين"
+                  " والزبرجد الخريطي من وشاح القمر."
+              ),
+              "status": "تنوع معدني وطيفي فريد",
+              "type": "safe",
+          },
+      ],
+      "الصلابه": [
+          {
+              "name": "سهول ماري ترانكويليتاتيس (Mare Tranquillitatis)",
+              "coords": "0.8° شمالاً / 23.4° شرقاً",
+              "report": (
+                  "تربة بازلتية متماسكة وصلبة، مناسبة جداً لهبوط المركبات الثقيلة"
+                  " دون خطر الانغماس."
+              ),
+              "status": "صلابة عالية واستقرار تربة",
+              "type": "safe",
+          },
+      ],
+      "المعادن": [
+          {
+              "name": "فوهة كوبرنيكوس (Copernicus Crater)",
+              "coords": "9.7° شمالاً / 20.0° غرباً",
+              "report": (
+                  "تركز عالي للمعادن السيليكاتية والمادة المقذوفة الناتجة عن"
+                  " الاصطدام العميق."
+              ),
+              "status": "احتياطي معدني مكتشف",
+              "type": "high",
+          },
+      ],
+      "توقعات الإشعاع الشمسي": [
+          {
+              "name": "القطب الشمالي القمري (North Pole Sectors)",
+              "coords": "85.0° شمالاً / 0.0° شرقاً",
+              "report": (
+                  "معدلات تعرض متوسطة للإشعاع الشمسي والرياح الشمسية، مع وجود"
+                  " تحذيرات أثناء العواصف الشمسية."
+              ),
+              "status": "مستوى إحصائي آمن للمهام",
+              "type": "safe",
+          },
+      ],
+      "وضع القمر": [
+          {
+              "name": "الموقع المداري الحالي (Earth-Moon System)",
+              "coords": "المسافة: 384,400 كم / الطور: أحادي تناظري",
+              "report": (
+                  "القمر في وضعية الإضاءة القياسية بالنسبة لمحطات الرصد الأرضية"
+                  " التابعة لناسا."
+              ),
+              "status": "اتصال مباشر ومستقر",
+              "type": "safe",
+          },
+      ],
+  }
+
+  current_craters = data_sources.get(st.session_state.selected_category, [])
+
   col_info, col_img = st.columns([3, 2])
 
   with col_info:
-    st.markdown(
-        """
-        <div class="crater-card">
-            <h4 style="color: #00d2ff; margin-top:0;">فوهة ساكلتون (Shackleton Crater)</h4>
-            <p><b>الإحداثيات:</b> 89.9° جنوباً / 129° شرقاً</p>
-            <p><b>تقرير المهمة:</b> ظل دائم، جليد محتمل، إضاءة شمسية قريبة على الحواف الجبلية.</p>
-            <span class="badge-high">تركيز عالي جداً للمورد</span>
-        </div>
-        
-        <div class="crater-card">
-            <h4 style="color: #00d2ff; margin-top:0;">فوهة هاوورث (Haworth Crater)</h4>
-            <p><b>الإحداثيات:</b> 87.4° جنوباً / 0.1° شرقاً</p>
-            <p><b>تقرير المهمة:</b> منحدرات آمنة للهبوط، فوهة باردة مناسبة لحفظ عينات الجليد.</p>
-            <span class="badge-safe">موقع هبوط آمن ومرشح</span>
-        </div>
-
-        <div class="crater-card">
-            <h4 style="color: #00d2ff; margin-top:0;">فوهة نوبيل (Nobile Crater)</h4>
-            <p><b>الإحداثيات:</b> 85.2° جنوباً / 154° شرقاً</p>
-            <p><b>تقرير المهمة:</b> موقع مستهدف لرحلات فالكريب ومهمات ناسا القادمة لاكتشاف الموارد السطحية.</p>
-            <span class="badge-high">إضاءة عالية وتركيز جيد</span>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    for crater in current_craters:
+      badge_class = (
+          "badge-high" if crater["type"] == "high" else "badge-safe"
+      )
+      st.markdown(
+          f"""
+            <div class="crater-card">
+                <h4 style="color: #00d2ff; margin-top:0;">{crater['name']}</h4>
+                <p><b>الإحداثيات من أرشيف ناسا:</b> {crater['coords']}</p>
+                <p><b>تقرير التحليل:</b> {crater['report']}</p>
+                <span class="{badge_class}">{crater['status']}</span>
+            </div>
+            """,
+          unsafe_allow_html=True,
+      )
 
   with col_img:
     st.markdown(
-        """
+        f"""
         <div class="crater-card" style="text-align: center;">
-            <p style="color: #00d2ff; font-weight: bold;">خريطة التركيز الحراري (Heatmap)</p>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg" style="width: 100%; border-radius: 10px; opacity: 0.8; border: 1px solid #00d2ff;">
-            <p style="font-size: 13px; color: #94a3b8; margin-top: 10px;">🔴 النقاط الحمراء توضح بؤر التركيز العالي للموارد المستهدفة في القطب الجنوبي للقمري.</p>
+            <p style="color: #00d2ff; font-weight: bold;">خريطة التحليل الحراري والتركز ({st.session_state.selected_category})</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg" style="width: 100%; border-radius: 10px; opacity: 0.85; border: 1px solid #00d2ff; box-shadow: 0 0 15px rgba(0,210,255,0.3);">
+            <p style="font-size: 13px; color: #94a3b8; margin-top: 10px;">🔴 النقاط الشفافة والحمراء توضح محاكاة لبيانات استشعار ناسا لمواقع تركز ({st.session_state.selected_category}).</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-  # شريط التنقل السفلي المحاكي لتصميمك
+  # شريط التنقل السفلي
   st.write("<br>", unsafe_allow_html=True)
   nav1, nav2, nav3, nav4 = st.columns(4)
   with nav1:
