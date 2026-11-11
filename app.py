@@ -3,7 +3,7 @@ import streamlit as st
 
 # إعداد الصفحة وتوسيعها
 st.set_page_config(
-    page_title="Nebulous Vision - Dynamic NASA GIS", page_icon="🌙", layout="wide"
+    page_title="Nebulous Vision - NASA Official GIS", page_icon="🌙", layout="wide"
 )
 
 # تتبع حالة التطبيق
@@ -58,7 +58,7 @@ if not st.session_state.started:
         position: absolute;
         width: 700px;
         height: 700px;
-        background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg');
+        background-image: url('https://images.nasa.gov/images/PIA15383~orig.jpg');
         background-size: cover;
         background-position: center;
         border-radius: 50%;
@@ -196,7 +196,6 @@ else:
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
     }
-    /* تنسيق أزرار التصنيفات العلوية لكي تكون واضحة ومقروءة تماماً */
     .stButton button {
         background-color: #0f172a !important;
         color: #ffffff !important;
@@ -253,7 +252,7 @@ else:
 
   st.write("---")
 
-  # قائمة التصنيفات الشاملة (حسب رسمتك بالمللي)
+  # قائمة التصنيفات الشاملة
   categories = [
       "اماكن المياه",
       "الجليد",
@@ -269,11 +268,10 @@ else:
 
   st.markdown(
       "<h4 style='color: #94a3b8;'>اختر التصنيف أو الظاهرة للتحليل من أرشيف"
-      " ناسا:</h4>",
+      " ناسا الرسمي:</h4>",
       unsafe_allow_html=True,
   )
 
-  # عرض الأزرار في صفوف منظمة
   cols = st.columns(5)
   for i, cat in enumerate(categories):
     with cols[i % 5]:
@@ -284,11 +282,11 @@ else:
   st.write("")
   st.markdown(
       f"<h3 style='color: #00d2ff; margin-top: 10px;'>📊 نتائج أرشيف ناسا"
-      f" (LRO): تحليل ({st.session_state.selected_category})</h3>",
+      f" الرسمية (LRO): تحليل ({st.session_state.selected_category})</h3>",
       unsafe_allow_html=True,
   )
 
-  # قاعدة بيانات ديناميكية مع إحداثيات نقاط تفاعلية وألوان خاصة بكل تصنيف
+  # قاعدة بيانات تعتمد على صور أرشيف ناسا الرسمية المفتوحة (بدون حظر عرض)
   data_sources = {
       "اماكن المياه": [
           {
@@ -300,11 +298,10 @@ else:
               ),
               "status": "تركيز عالي جداً للمورد",
               "type": "high",
-              "color": "#00d2ff",
-              "cx1": 120,
-              "cy1": 110,
-              "cx2": 210,
-              "cy2": 150,
+              "img": "https://images.nasa.gov/images/PIA15383~orig.jpg",
+              "color": "rgba(0, 210, 255, 0.8)",
+              "p1": "top: 40%; left: 45%;",
+              "p2": "top: 60%; left: 55%;",
           },
           {
               "name": "فوهة فاوستيني (Faustini Crater)",
@@ -314,11 +311,10 @@ else:
               ),
               "status": "موقع مرشح بقوة",
               "type": "safe",
-              "color": "#0099ff",
-              "cx1": 150,
-              "cy1": 90,
-              "cx2": 180,
-              "cy2": 160,
+              "img": "https://images.nasa.gov/images/PIA16200~orig.jpg",
+              "color": "rgba(0, 150, 255, 0.8)",
+              "p1": "top: 35%; left: 50%;",
+              "p2": "top: 55%; left: 40%;",
           },
       ],
       "الجليد": [
@@ -331,11 +327,10 @@ else:
               ),
               "status": "جليد قطبي دائم",
               "type": "high",
-              "color": "#b4dcff",
-              "cx1": 100,
-              "cy1": 140,
-              "cx2": 220,
-              "cy2": 100,
+              "img": "https://images.nasa.gov/images/PIA13515~orig.jpg",
+              "color": "rgba(180, 220, 255, 0.9)",
+              "p1": "top: 45%; left: 40%;",
+              "p2": "top: 65%; left: 60%;",
           },
           {
               "name": "فوهة كابيوس (Cabeus Crater)",
@@ -346,11 +341,10 @@ else:
               ),
               "status": "مؤكد علمياً من ناسا",
               "type": "safe",
-              "color": "#96c8ff",
-              "cx1": 130,
-              "cy1": 120,
-              "cx2": 190,
-              "cy2": 130,
+              "img": "https://images.nasa.gov/images/PIA12248~orig.jpg",
+              "color": "rgba(150, 200, 255, 0.8)",
+              "p1": "top: 50%; left: 45%;",
+              "p2": "top: 30%; left: 55%;",
           },
       ],
       "درجات الحرارة": [
@@ -363,11 +357,10 @@ else:
               ),
               "status": "برودة فائقة (ظل دائم)",
               "type": "high",
-              "color": "#0064ff",
-              "cx1": 90,
-              "cy1": 100,
-              "cx2": 200,
-              "cy2": 170,
+              "img": "https://images.nasa.gov/images/PIA16834~orig.jpg",
+              "color": "rgba(0, 100, 255, 0.9)",
+              "p1": "top: 55%; left: 45%;",
+              "p2": "top: 35%; left: 50%;",
           },
           {
               "name": "مرتفعات القطب الجنوبي (Peak of Eternal Light)",
@@ -378,11 +371,10 @@ else:
               ),
               "status": "مناسب لتوليد الطاقة",
               "type": "safe",
-              "color": "#ff8c00",
-              "cx1": 160,
-              "cy1": 80,
-              "cx2": 140,
-              "cy2": 140,
+              "img": "https://images.nasa.gov/images/PIA17469~orig.jpg",
+              "color": "rgba(255, 140, 0, 0.9)",
+              "p1": "top: 40%; left: 55%;",
+              "p2": "top: 60%; left: 45%;",
           },
       ],
       "الاماكن المضيئه": [
@@ -395,11 +387,10 @@ else:
               ),
               "status": "إضاءة شمسية شبه دائمة",
               "type": "safe",
-              "color": "#ffe600",
-              "cx1": 150,
-              "cy1": 100,
-              "cx2": 170,
-              "cy2": 120,
+              "img": "https://images.nasa.gov/images/PIA17469~orig.jpg",
+              "color": "rgba(255, 230, 0, 0.9)",
+              "p1": "top: 45%; left: 50%;",
+              "p2": "top: 55%; left: 50%;",
           },
       ],
       "الاماكن المظلمه": [
@@ -412,11 +403,10 @@ else:
               ),
               "status": "ظلام دائم - حظر شمسي",
               "type": "high",
-              "color": "#505078",
-              "cx1": 110,
-              "cy1": 130,
-              "cx2": 210,
-              "cy2": 110,
+              "img": "https://images.nasa.gov/images/PIA15383~orig.jpg",
+              "color": "rgba(80, 80, 120, 0.95)",
+              "p1": "top: 50%; left: 50%;",
+              "p2": "top: 60%; left: 55%;",
           },
       ],
       "المواد الطيف الضوئي": [
@@ -429,11 +419,10 @@ else:
               ),
               "status": "تنوع معدني وطيفي فريد",
               "type": "safe",
-              "color": "#a020f0",
-              "cx1": 140,
-              "cy1": 150,
-              "cx2": 180,
-              "cy2": 90,
+              "img": "https://images.nasa.gov/images/PIA16834~orig.jpg",
+              "color": "rgba(160, 32, 240, 0.8)",
+              "p1": "top: 45%; left: 45%;",
+              "p2": "top: 55%; left: 55%;",
           },
       ],
       "الصلابه": [
@@ -446,11 +435,10 @@ else:
               ),
               "status": "صلابة عالية واستقرار تربة",
               "type": "safe",
-              "color": "#2ecc71",
-              "cx1": 120,
-              "cy1": 100,
-              "cx2": 200,
-              "cy2": 140,
+              "img": "https://images.nasa.gov/images/PIA00302~orig.jpg",
+              "color": "rgba(46, 204, 113, 0.8)",
+              "p1": "top: 50%; left: 40%;",
+              "p2": "top: 40%; left: 60%;",
           },
       ],
       "المعادن": [
@@ -463,11 +451,10 @@ else:
               ),
               "status": "احتياطي معدني مكتشف",
               "type": "high",
-              "color": "#e74c3c",
-              "cx1": 135,
-              "cy1": 115,
-              "cx2": 175,
-              "cy2": 135,
+              "img": "https://images.nasa.gov/images/PIA00301~orig.jpg",
+              "color": "rgba(231, 76, 60, 0.9)",
+              "p1": "top: 45%; left: 48%;",
+              "p2": "top: 55%; left: 52%;",
           },
       ],
       "توقعات الإشعاع الشمسي": [
@@ -480,11 +467,10 @@ else:
               ),
               "status": "مستوى إحصائي آمن للمهام",
               "type": "safe",
-              "color": "#f1c40f",
-              "cx1": 100,
-              "cy1": 90,
-              "cx2": 220,
-              "cy2": 150,
+              "img": "https://images.nasa.gov/images/PIA13515~orig.jpg",
+              "color": "rgba(241, 196, 15, 0.9)",
+              "p1": "top: 40%; left: 45%;",
+              "p2": "top: 60%; left: 55%;",
           },
       ],
       "وضع القمر": [
@@ -497,11 +483,10 @@ else:
               ),
               "status": "اتصال مباشر ومستقر",
               "type": "safe",
-              "color": "#3498db",
-              "cx1": 150,
-              "cy1": 110,
-              "cx2": 160,
-              "cy2": 120,
+              "img": "https://images.nasa.gov/images/PIA15383~orig.jpg",
+              "color": "rgba(52, 152, 219, 0.8)",
+              "p1": "top: 50%; left: 50%;",
+              "p2": "top: 45%; left: 45%;",
           },
       ],
   }
@@ -528,34 +513,22 @@ else:
       )
 
   with col_img:
-    # عرض خريطة SVG تضاريسية تفاعلية لكل فوهة مع نقاط شفافة ملونة تضمن عدم ظهور أي صور مكسورة
+    # عرض صور حقيقية من أرشيف ناسا الرسمي مع نقاط شفافة ملونة فوقها مباشرة
     for crater in current_craters:
-      svg_code = f"""
+      img_html = f"""
             <div class="crater-card" style="text-align: center;">
                 <p style="color: #00d2ff; font-weight: bold; margin-bottom: 5px;">{crater['name']}</p>
-                <svg width="100%" height="220" viewBox="0 0 300 220" style="background: #020617; border-radius: 12px; border: 1px solid #00d2ff;">
-                    <!-- خلفية تضاريسية دائرية للفوهة -->
-                    <circle cx="150" cy="110" r="90" fill="#0f172a" stroke="#1e293b" stroke-width="4"/>
-                    <circle cx="150" cy="110" r="70" fill="#090d16" stroke="#334155" stroke-width="2"/>
-                    <circle cx="150" cy="110" r="45" fill="#020408" stroke="#475569" stroke-width="1.5"/>
-                    
-                    <!-- تضاريس وتعرجات داخلية واقعية -->
-                    <path d="M 100 110 Q 150 70 200 110 Q 150 150 100 110 Z" fill="#1e293b" opacity="0.4"/>
-                    
-                    <!-- نقاط التركيز الشفافة الملونة (Heatmap glowing dots) حسب التصنيف -->
-                    <circle cx="{crater['cx1']}" cy="{crater['cy1']}" r="18" fill="{crater['color']}" opacity="0.4"/>
-                    <circle cx="{crater['cx1']}" cy="{crater['cy1']}" r="8" fill="{crater['color']}" opacity="0.9"/>
-                    
-                    <circle cx="{crater['cx2']}" cy="{crater['cy2']}" r="14" fill="{crater['color']}" opacity="0.4"/>
-                    <circle cx="{crater['cx2']}" cy="{crater['cy2']}" r="6" fill="{crater['color']}" opacity="0.9"/>
-                    
-                    <!-- إطار النص الإرشادي داخل الرسم -->
-                    <text x="15" y="205" fill="#94a3b8" font-size="11" font-family="sans-serif">GIS Vector Map | ناسا LRO</text>
-                </svg>
-                <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">🔵 النقاط الملونة توضح مناطق التركيز القصوى لـ ({st.session_state.selected_category}).</p>
+                <div style="position: relative; display: inline-block; width: 100%;">
+                    <img src="{crater['img']}" style="width: 100%; height: 210px; object-fit: cover; border-radius: 12px; border: 1px solid #00d2ff;">
+                    <!-- نقطة التركيز الأولى -->
+                    <div style="position: absolute; {crater['p1']} width: 22px; height: 22px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 15px {crater['color']}; opacity: 0.85;"></div>
+                    <!-- نقطة التركيز الثانية -->
+                    <div style="position: absolute; {crater['p2']} width: 16px; height: 16px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 12px {crater['color']}; opacity: 0.85;"></div>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">🔵 النقاط الشفافة الملونة توضح مناطق التركيز لـ ({st.session_state.selected_category}) من أرشيف ناسا.</p>
             </div>
             """
-      st.markdown(svg_code, unsafe_allow_html=True)
+      st.markdown(img_html, unsafe_allow_html=True)
 
   # شريط التنقل السفلي
   st.write("<br>", unsafe_allow_html=True)
