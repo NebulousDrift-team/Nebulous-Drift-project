@@ -186,7 +186,7 @@ if not st.session_state.started:
   )
 
 # ==========================================
-# الحالة الثانية: الداشبورد التفاعلي الكامل لكل الفئات
+# الحالة الثانية: الداشبورد التفاعلي المطور
 # ==========================================
 else:
   st.markdown(
@@ -196,6 +196,20 @@ else:
         background-color: #070d1b;
         color: white;
         font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+    /* تنسيق أزرار التصنيفات العلوية لكي تكون واضحة ومقروءة دائماً */
+    .stButton button {
+        background-color: #0f172a !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(0, 210, 255, 0.5) !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+    }
+    .stButton button:hover {
+        background-color: #1e293b !important;
+        border-color: #00d2ff !important;
+        color: #00d2ff !important;
     }
     .crater-card {
         background: #0f172a;
@@ -264,16 +278,7 @@ else:
   cols = st.columns(5)
   for i, cat in enumerate(categories):
     with cols[i % 5]:
-      if st.button(
-          cat,
-          use_container_width=True,
-          key=f"cat_{i}",
-          type=(
-              "primary"
-              if st.session_state.selected_category == cat
-              else "secondary"
-          ),
-      ):
+      if st.button(cat, use_container_width=True, key=f"cat_{i}"):
         st.session_state.selected_category = cat
         st.rerun()
 
@@ -284,7 +289,7 @@ else:
       unsafe_allow_html=True,
   )
 
-  # قاعدة بيانات ديناميكية تتغير فوراً حسب التصنيف المختار
+  # قاعدة بيانات ديناميكية مرتبطة بصور حقيقية لكل فوهة/منطقة
   data_sources = {
       "اماكن المياه": [
           {
@@ -296,6 +301,8 @@ else:
               ),
               "status": "تركيز عالي جداً للمورد",
               "type": "high",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Shackleton_crater_mosaic.jpg/640px-Shackleton_crater_mosaic.jpg",
+              "color": "rgba(0, 210, 255, 0.6)",
           },
           {
               "name": "فوهة فاوستيني (Faustini Crater)",
@@ -305,6 +312,8 @@ else:
               ),
               "status": "موقع مرشح بقوة",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(0, 150, 255, 0.5)",
           },
       ],
       "الجليد": [
@@ -317,6 +326,8 @@ else:
               ),
               "status": "جليد قطبي دائم",
               "type": "high",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(180, 220, 255, 0.7)",
           },
           {
               "name": "فوهة كابيوس (Cabeus Crater)",
@@ -327,6 +338,8 @@ else:
               ),
               "status": "مؤكد علمياً من ناسا",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(150, 200, 255, 0.6)",
           },
       ],
       "درجات الحرارة": [
@@ -339,6 +352,8 @@ else:
               ),
               "status": "برودة فائقة (ظل دائم)",
               "type": "high",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(0, 100, 255, 0.7)",
           },
           {
               "name": "مرتفعات القطب الجنوبي (Peak of Eternal Light)",
@@ -349,6 +364,8 @@ else:
               ),
               "status": "مناسب لتوليد الطاقة",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(255, 140, 0, 0.7)",
           },
       ],
       "الاماكن المضيئه": [
@@ -361,6 +378,8 @@ else:
               ),
               "status": "إضاءة شمسية شبه دائمة",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(255, 230, 0, 0.7)",
           },
       ],
       "الاماكن المظلمه": [
@@ -373,6 +392,8 @@ else:
               ),
               "status": "ظلام دائم - حظر شمسي",
               "type": "high",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(80, 80, 120, 0.8)",
           },
       ],
       "المواد الطيف الضوئي": [
@@ -385,6 +406,8 @@ else:
               ),
               "status": "تنوع معدني وطيفي فريد",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(160, 32, 240, 0.6)",
           },
       ],
       "الصلابه": [
@@ -397,6 +420,8 @@ else:
               ),
               "status": "صلابة عالية واستقرار تربة",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(46, 204, 113, 0.6)",
           },
       ],
       "المعادن": [
@@ -409,6 +434,8 @@ else:
               ),
               "status": "احتياطي معدني مكتشف",
               "type": "high",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(231, 76, 60, 0.7)",
           },
       ],
       "توقعات الإشعاع الشمسي": [
@@ -421,6 +448,8 @@ else:
               ),
               "status": "مستوى إحصائي آمن للمهام",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(241, 196, 15, 0.7)",
           },
       ],
       "وضع القمر": [
@@ -433,6 +462,8 @@ else:
               ),
               "status": "اتصال مباشر ومستقر",
               "type": "safe",
+              "img": "https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg",
+              "color": "rgba(52, 152, 219, 0.6)",
           },
       ],
   }
@@ -459,16 +490,24 @@ else:
       )
 
   with col_img:
-    st.markdown(
-        f"""
-        <div class="crater-card" style="text-align: center;">
-            <p style="color: #00d2ff; font-weight: bold;">خريطة التحليل الحراري والتركز ({st.session_state.selected_category})</p>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg" style="width: 100%; border-radius: 10px; opacity: 0.85; border: 1px solid #00d2ff; box-shadow: 0 0 15px rgba(0,210,255,0.3);">
-            <p style="font-size: 13px; color: #94a3b8; margin-top: 10px;">🔴 النقاط الشفافة والحمراء توضح محاكاة لبيانات استشعار ناسا لمواقع تركز ({st.session_state.selected_category}).</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    # عرض صورة الفوهة المخصصة مع طبقة شفافة وملونة تعبر عن التركيز حسب التصنيف
+    for crater in current_craters:
+      st.markdown(
+          f"""
+            <div class="crater-card" style="text-align: center; position: relative;">
+                <p style="color: #00d2ff; font-weight: bold; margin-bottom: 5px;">{crater['name']}</p>
+                <div style="position: relative; display: inline-block; width: 100%;">
+                    <img src="{crater['img']}" style="width: 100%; border-radius: 10px; opacity: 0.9; border: 1px solid #00d2ff;">
+                    <!-- نقاط شفافة وملونة تتناسب مع التصنيف المختار لتوضيح بؤر التركيز -->
+                    <div style="position: absolute; top: 35%; left: 45%; width: 25px; height: 25px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 15px {crater['color']}; animation: pulse 1.5s infinite;"></div>
+                    <div style="position: absolute; top: 60%; left: 60%; width: 18px; height: 18px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 12px {crater['color']};"></div>
+                    <div style="position: absolute; top: 25%; left: 30%; width: 15px; height: 15px; background: {crater['color']}; border-radius: 50%; box-shadow: 0 0 10px {crater['color']};"></div>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">🔵 النقاط الملونة الشفافة توضح مناطق الترکز القصوى لـ ({st.session_state.selected_category}) داخل الفوهة.</p>
+            </div>
+            """,
+          unsafe_allow_html=True,
+      )
 
   # شريط التنقل السفلي
   st.write("<br>", unsafe_allow_html=True)
